@@ -9,11 +9,21 @@
 
 ALavaGameMode::ALavaGameMode()
 {
-	//
+	// add third person controller
+	static ConstructorHelpers::FClassFinder<APlayerController> PCClass(
+		TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonPlayerController"));
+	if (PCClass.Class != nullptr)
+	{
+		PlayerControllerClass = PCClass.Class;
+	}
 	
-	// add player controller class
-	//PlayerControllerClass = ALavaLetowskiGaoPlayerController::StaticClass();
-	// - seemed broken so i commented it out - kacper
+	// add third person character
+	static ConstructorHelpers::FClassFinder<APawn> PawnBPClass(
+		TEXT("/Game/ThirdPerson/Blueprints/BP_ThirdPersonCharacter"));
+	if (PawnBPClass.Class != nullptr)
+	{
+		DefaultPawnClass = PawnBPClass.Class;
+	}
 	
 	// add hud class to game-mode
 	HUDClass = ALavaHUD::StaticClass();
