@@ -3,6 +3,7 @@
 
 #include "LavaGameMode.h"
 
+#include "LavaHUD.h"
 #include "LavaLetowskiGaoPlayerController.h"
 #include "MenuHUD.h"
 
@@ -11,9 +12,11 @@ ALavaGameMode::ALavaGameMode()
 	//
 	
 	// add player controller class
-	PlayerControllerClass = ALavaLetowskiGaoPlayerController::StaticClass();
-	// add hud class
-	HUDClass = AMenuHUD::StaticClass();
+	//PlayerControllerClass = ALavaLetowskiGaoPlayerController::StaticClass();
+	// - seemed broken so i commented it out - kacper
+	
+	// add hud class to game-mode
+	HUDClass = ALavaHUD::StaticClass();
 }
 
 void ALavaGameMode::BeginPlay()
@@ -67,8 +70,7 @@ void ALavaGameMode::EndPlay(const EEndPlayReason::Type Reason)
 
 float ALavaGameMode::GetTimeRemaining() const
 {
-	// TODO: Implement
-	return 0.0f;
+	return LevelSeconds;
 }
 
 /** A key was picked up. The key itself does not know what that means. */
