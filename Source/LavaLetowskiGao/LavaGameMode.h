@@ -64,4 +64,5 @@ protected:
 
 	bool bGameOver = false;
 	FTimerHandle LevelTimer;
+	void UpdateCountdown();
 };

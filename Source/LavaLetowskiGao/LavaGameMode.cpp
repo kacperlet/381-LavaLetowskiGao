@@ -5,17 +5,56 @@
 
 ALavaGameMode::ALavaGameMode()
 {
-	// TODO: Implement
+	//
 }
 
 void ALavaGameMode::BeginPlay()
 {
-	// TODO: Implement
+	Super::BeginPlay();
+	
+	GEngine->AddOnScreenDebugMessage(
+			-1,
+			2.0f,
+			FColor::Blue, 
+			TEXT("Timer Started")        
+	);
+	
+	// Start timer
+	GetWorldTimerManager().SetTimer(LevelTimer, this, &ALavaGameMode::UpdateCountdown, 1.0f, true);
+}
+
+void ALavaGameMode::UpdateCountdown()
+{
+	if (LevelSeconds > 0.0f)
+	{
+		LevelSeconds -= 1;
+		
+		FString TimeMessage = FString::Printf(TEXT("Current Time: %f"), LevelSeconds);
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			2.0f,
+			FColor::Green, 
+			TimeMessage        
+		);
+		
+	}
+	else
+	{
+		GetWorldTimerManager().ClearTimer(LevelTimer); // stop timer
+		
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			2.0f,
+			FColor::Blue, 
+			TEXT("Timer Ended")        
+	);
+		// TODO: end game
+	}
 }
 
 void ALavaGameMode::EndPlay(const EEndPlayReason::Type Reason)
 {
-	// TODO: Implement
+	Super::EndPlay(Reason);
 }
 
 float ALavaGameMode::GetTimeRemaining() const
