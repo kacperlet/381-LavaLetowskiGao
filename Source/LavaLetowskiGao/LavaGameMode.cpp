@@ -30,18 +30,45 @@ ALavaGameMode::ALavaGameMode()
 	
 	// add hud class to game-mode
 	HUDClass = ALavaHUD::StaticClass();
+	
+	// add result widget class
+	static ConstructorHelpers::FClassFinder<UUserWidget> WidgetAssetFinder(TEXT("/Game/User_Interface/BP_ResultWidget"));
+	if (WidgetAssetFinder.Succeeded())
+	{
+		ResultWidgetClass = WidgetAssetFinder.Class;
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("CRITICAL: Could not find the ResultWidget asset at the specified path"));
+	}
 }
 
 void ALavaGameMode::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	APlayerController* PC = GetWorld()->GetFirstPlayerController();
+	
+	// after start make sure that player input can be read
+	if (PC)
+	{
+		// hide mouse cursor
+		PC->SetShowMouseCursor(false);
+		FInputModeGameOnly InputMode;
+		PC->SetInputMode(InputMode);
+        // set viewport as focus
+		FSlateApplication::Get().SetAllUserFocusToGameViewport();
+	}
+	
 	GEngine->AddOnScreenDebugMessage(
-			-1,
+			1,
 			2.0f,
 			FColor::Blue, 
 			TEXT("Timer Started")        
 	);
+	
+	// FOR TESTING ONLY -- SHORT TIMER
+	LevelSeconds = 10.f;
 	
 	// Start timer
 	GetWorldTimerManager().SetTimer(LevelTimer, this, &ALavaGameMode::UpdateCountdown, 1.0f, true);
@@ -55,7 +82,7 @@ void ALavaGameMode::UpdateCountdown()
 		
 		FString TimeMessage = FString::Printf(TEXT("Current Time: %f"), LevelSeconds);
 		GEngine->AddOnScreenDebugMessage(
-			-1,
+			1,
 			2.0f,
 			FColor::Green, 
 			TimeMessage        
@@ -71,15 +98,15 @@ void ALavaGameMode::UpdateCountdown()
 			ALavaHUD* LavaHUD = Cast<ALavaHUD>(PC->GetHUD());
 			if (LavaHUD)
 			{
-				// call the function
-				LavaHUD->ShowResultScreen();
+				// call the show result screen
+				LavaHUD->ShowResultScreen(ResultWidgetClass);
 			}
 		}
 		
 		GetWorldTimerManager().ClearTimer(LevelTimer); // stop timer
 		
 		GEngine->AddOnScreenDebugMessage(
-			-1,
+			1,
 			2.0f,
 			FColor::Blue, 
 			TEXT("Timer Ended")        

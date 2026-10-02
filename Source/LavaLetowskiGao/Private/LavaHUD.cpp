@@ -45,15 +45,15 @@ void ALavaHUD::Tick(float DeltaSeconds)
 		HUDWidget->SetLavaHeight(0);
 		HUDWidget->SetScore(Gm->GetScore());
 		
-		// show result screen
-		if (Gm->GetTimeRemaining() <= 0.0f || Gm->GetLivesLeft() <= 0)
-		{
-			ALavaHUD::ShowResultScreen();
-		}
+		// // show result screen
+		// if (Gm->GetTimeRemaining() <= 0.0f || Gm->GetLivesLeft() <= 0)
+		// {
+		// 	ALavaHUD::ShowResultScreen();
+		// }
 	}
 }
 
-void ALavaHUD::ShowResultScreen()
+void ALavaHUD::ShowResultScreen(TSubclassOf<UResultWidget> WidgetClassToSpawn)
 {
 	// remove HUD widget from screen
 	if (HUDWidget)
@@ -61,7 +61,7 @@ void ALavaHUD::ShowResultScreen()
 		HUDWidget->RemoveFromParent();
 	}
 
-	UResultWidget* ResultWidget = CreateWidget<UResultWidget>(GetWorld(), ResultWidgetClass);
+	UResultWidget* ResultWidget = CreateWidget<UResultWidget>(GetWorld(), WidgetClassToSpawn);
 	// put Result widget
 	if (ResultWidget)
 	{
