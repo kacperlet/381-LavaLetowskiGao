@@ -21,7 +21,7 @@ public:
 	void Construct(const FArguments& InArgs);
 	
 	/** The HUD that created this widget */
-	TWeakObjectPtr<class AMenuHUD> OwningHUD();
+	TWeakObjectPtr<class AMenuHUD> OwningHUD;
 	
 	
 };

@@ -3,9 +3,17 @@
 
 #include "LavaGameMode.h"
 
+#include "LavaLetowskiGaoPlayerController.h"
+#include "MenuHUD.h"
+
 ALavaGameMode::ALavaGameMode()
 {
 	//
+	
+	// add player controller class
+	PlayerControllerClass = ALavaLetowskiGaoPlayerController::StaticClass();
+	// add hud class
+	HUDClass = AMenuHUD::StaticClass();
 }
 
 void ALavaGameMode::BeginPlay()

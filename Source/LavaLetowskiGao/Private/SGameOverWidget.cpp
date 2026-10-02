@@ -12,10 +12,20 @@
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SGameOverWidget::Construct(const FArguments& InArgs)
 {
+	// avoid annoying error message
+	bCanSupportFocus = true;	
+	
+	// allows us to cache references to the hud
+	OwningHUD = InArgs._OwningHUD;
+	
 	// button padding/margins
 	const FMargin ContentPadding = FMargin(500.f, 300.f);
+	const FMargin ButtonPadding = FMargin(10.f, 10.f);
+	
 	// LOCTEXT here uses "GameTitle" as a key for when/if the game gets localized
 	const FText TitleText = LOCTEXT("GameTitle", "The Met Quest");
+	const FText PlayText = LOCTEXT("PlayText", "Play");
+	const FText GameOverText = LOCTEXT("GameOverText", "Game Over");
 	
 	// contains the content of the widget	
 	ChildSlot
@@ -54,6 +64,25 @@ void SGameOverWidget::Construct(const FArguments& InArgs)
 					SNew(STextBlock)
 					.Text(TitleText)
 					
+				]
+
+				+ SHorizontalBox::Slot()
+				[
+					// our text
+					SNew(STextBlock)
+					.Text(GameOverText)
+				]
+
+				// play button
+				+ SHorizontalBox::Slot()
+				.Padding(ButtonPadding)
+				[
+					SNew(SButton)
+					[
+						// putting text inside the button
+						SNew(STextBlock)
+						.Text(PlayText)
+					]
 				]
 			]
 		];

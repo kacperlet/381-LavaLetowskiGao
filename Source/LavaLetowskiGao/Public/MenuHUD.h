@@ -14,4 +14,11 @@ class LAVALETOWSKIGAO_API AMenuHUD : public AHUD
 {
 	GENERATED_BODY()
 	
+protected:
+	TSharedPtr<class SGameOverWidget> GameOverWidget;
+	
+	// the container is used to add and remove the widget from the screen
+	TSharedPtr<class SWidget> gameOverContainer;
+	
+	virtual void BeginPlay() override;
 };
