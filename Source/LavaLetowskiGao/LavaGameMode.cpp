@@ -7,6 +7,9 @@
 #include "LavaLetowskiGaoPlayerController.h"
 #include "MenuHUD.h"
 
+// (may be optional)
+#include "Kismet/GameplayStatics.h"
+
 ALavaGameMode::ALavaGameMode()
 {
 	// add third person controller
@@ -61,6 +64,18 @@ void ALavaGameMode::UpdateCountdown()
 	}
 	else
 	{
+		// show result screen
+		APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0); // need to set the player who gets the screen
+		if (PC)
+		{
+			ALavaHUD* LavaHUD = Cast<ALavaHUD>(PC->GetHUD());
+			if (LavaHUD)
+			{
+				// call the function
+				LavaHUD->ShowResultScreen();
+			}
+		}
+		
 		GetWorldTimerManager().ClearTimer(LevelTimer); // stop timer
 		
 		GEngine->AddOnScreenDebugMessage(
