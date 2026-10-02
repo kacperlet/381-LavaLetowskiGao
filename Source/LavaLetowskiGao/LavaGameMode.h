@@ -29,10 +29,24 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Rules")
 	bool HasAllKeys() const { return KeysCollected >= KeysRequired; }
-
+	
+	UFUNCTION(BlueprintPure, Category = "Tuning")
+	int32 GetKeysRequired() const { return KeysRequired; }
+	
 	UFUNCTION(BlueprintPure, Category = "Rules")
 	float GetTimeRemaining() const;
+	
+	UFUNCTION(BlueprintPure, Category = "Rules")
+	float GetLevelSeconds() const { return LevelSeconds; }
 
+	UFUNCTION(BlueprintPure, Category = "Rules")
+	int32 GetKeysCollected() const { return KeysCollected; }
+
+	UFUNCTION(BlueprintPure, Category = "Rules")
+	int32 GetLivesLeft() const { return LivesLeft; }
+
+	UFUNCTION(BlueprintPure, Category = "Rules")
+	int32 GetScore() const { return Score; }
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type Reason) override;

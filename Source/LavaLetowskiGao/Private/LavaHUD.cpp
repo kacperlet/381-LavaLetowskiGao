@@ -38,5 +38,9 @@ void ALavaHUD::Tick(float DeltaSeconds)
 	if (const ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
 	{
 		HUDWidget->SetTimeRemaining(Gm->GetTimeRemaining());
+		HUDWidget->SetKeys(Gm->GetKeysCollected());
+		HUDWidget->SetLivesRemaining(Gm->GetLivesLeft());
+		HUDWidget->SetLavaHeight(0);
+		HUDWidget->SetScore(Gm->GetScore());
 	}
 }
