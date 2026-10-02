@@ -8,6 +8,10 @@
 #include "LavaHUD.generated.h"
 
 class ULavaHUDWidget;
+
+// add reference to result widget
+class UResultWidget;
+
 /**
  * 
  */
@@ -22,6 +26,11 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<ULavaHUDWidget> HUDWidgetClass;
+	
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UResultWidget> ResultWidgetClass;
+	// show result when game over
+	virtual void ShowResultScreen();
 
 private:
 	UPROPERTY() ULavaHUDWidget* HUDWidget;
