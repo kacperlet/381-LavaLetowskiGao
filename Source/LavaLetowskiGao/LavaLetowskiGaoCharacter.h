@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 #include "Logging/LogMacros.h"
 #include "LavaLetowskiGaoCharacter.generated.h"
 
@@ -48,6 +49,22 @@ protected:
 	/** Mouse Look Input Action */
 	UPROPERTY(EditAnywhere, Category="Input")
 	UInputAction* MouseLookAction;
+	
+	// ensures tuned values load properly
+	virtual void PostInitProperties() override;
+	
+	// settings for character movement -- adjustable in editor
+	UPROPERTY(EditAnywhere, Category="Tuning")
+	float JumpZVelocityVal = 500.f;
+	
+	UPROPERTY(EditAnywhere, Category="Tuning")
+	float AirControlVal = 0.35f;
+	
+	UPROPERTY(EditAnywhere, Category="Tuning")
+	float GravityScaleVal = 1.f;
+	
+	UPROPERTY(EditAnywhere, Category="Tuning")
+	int32 JumpMaxCountVal = 2;
 
 public:
 

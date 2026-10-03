@@ -28,12 +28,15 @@ ALavaLetowskiGaoCharacter::ALavaLetowskiGaoCharacter()
 
 	// Note: For faster iteration times these variables, and many more, can be tweaked in the Character Blueprint
 	// instead of recompiling to adjust them
-	GetCharacterMovement()->JumpZVelocity = 500.f;
-	GetCharacterMovement()->AirControl = 0.35f;
+	GetCharacterMovement()->JumpZVelocity = JumpZVelocityVal;
+	GetCharacterMovement()->AirControl = AirControlVal;
 	GetCharacterMovement()->MaxWalkSpeed = 500.f;
 	GetCharacterMovement()->MinAnalogWalkSpeed = 20.f;
 	GetCharacterMovement()->BrakingDecelerationWalking = 2000.f;
 	GetCharacterMovement()->BrakingDecelerationFalling = 1500.0f;
+	GetCharacterMovement()->GravityScale = GravityScaleVal;
+	
+	JumpMaxCount = JumpMaxCountVal;
 
 	// Create a camera boom (pulls in towards the player if there is a collision)
 	CameraBoom = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraBoom"));
@@ -130,4 +133,19 @@ void ALavaLetowskiGaoCharacter::DoJumpEnd()
 {
 	// signal the character to stop jumping
 	StopJumping();
+}
+
+// load tuned properties
+void ALavaLetowskiGaoCharacter::PostInitProperties()
+{
+	Super::PostInitProperties();
+
+	JumpMaxCount = JumpMaxCountVal;
+
+	if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
+	{
+		MoveComp->JumpZVelocity = JumpZVelocityVal;
+		MoveComp->AirControl = AirControlVal;
+		MoveComp->GravityScale = GravityScaleVal;
+	}
 }

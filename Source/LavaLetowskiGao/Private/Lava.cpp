@@ -40,8 +40,11 @@ void ALava::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	StartZ = Volume->GetComponentLocation().Z;
-	
+	if (Volume)
+	{
+		StartZ = Volume->GetComponentLocation().Z;
+	}
+
 	// add lava to game-mode for easier access
 	if (ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
 	{
