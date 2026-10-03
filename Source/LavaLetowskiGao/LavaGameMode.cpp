@@ -142,3 +142,11 @@ void ALavaGameMode::ReportHatchReached()
 {
 	// TODO: implement
 }
+
+int32 ALavaGameMode::GetRiseHeight() const
+{
+	if (Lava == nullptr)
+		return 0;
+	
+	return FMath::RoundToInt(Lava->GetRiseHeight());
+}

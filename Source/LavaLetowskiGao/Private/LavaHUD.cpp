@@ -42,7 +42,7 @@ void ALavaHUD::Tick(float DeltaSeconds)
 		HUDWidget->SetTimeRemaining(Gm->GetTimeRemaining());
 		HUDWidget->SetKeys(Gm->GetKeysCollected());
 		HUDWidget->SetLivesRemaining(Gm->GetLivesLeft());
-		HUDWidget->SetLavaHeight(0);
+		HUDWidget->SetLavaHeight(Gm->GetRiseHeight());
 		HUDWidget->SetScore(Gm->GetScore());
 		
 		// // show result screen

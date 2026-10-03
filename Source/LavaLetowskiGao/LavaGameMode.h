@@ -2,6 +2,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Lava.h"
 #include "GameFramework/GameModeBase.h"
 #include "LavaGameMode.generated.h"
 
@@ -47,6 +48,12 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "Rules")
 	int32 GetScore() const { return Score; }
+	
+	ALava* GetLava() const { return Lava; };
+	
+	void RegisterLava(ALava* LavaInput) { this->Lava = LavaInput; };
+	
+	int32 GetRiseHeight() const;
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type Reason) override;
@@ -66,6 +73,8 @@ protected:
 	/** Assign your WBP_Result child of this on BP_LavaGameMode. */
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<UResultWidget> ResultWidgetClass;
+	
+	ALava* Lava = nullptr;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Rules")
 	int32 KeysCollected = 0;
