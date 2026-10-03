@@ -21,10 +21,10 @@ public:
 	/** How far the surface has risen since the game started. Drives the HUD. */
 	UFUNCTION(BlueprintPure, Category = "Lava")
 	float GetRiseHeight() const;
-
+	
+	virtual void OnConstruction(const FTransform& Transform) override;
 protected:
 	virtual void BeginPlay() override;
-
 	// The signature must match FComponentBeginOverlapSignature exactly,
 	// and it must be marked UFUNCTION, or it will silently never be called.
 	UFUNCTION()
@@ -41,6 +41,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Tuning", meta = (ClampMin = "0.0", Units = "cm/s"))
 	float RiseRate = 40.f;
+	
+	UPROPERTY(EditAnywhere, Category = "Tuning", meta = (ClampMin = "0.0", Units = "cm"))
+	float SurfaceLength = 1000.f;
 
 	/** Recorded at BeginPlay so GetRiseHeight has something to measure from. */
 	float StartZ = 0.f;
