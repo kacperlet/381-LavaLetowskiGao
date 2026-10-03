@@ -26,7 +26,6 @@ void ALavaHUD::BeginPlay()
 	// adds widget blueprint to HUD UI
 	if (HUDWidgetClass)
 	{
-		
 		HUDWidget = CreateWidget<ULavaHUDWidget>(GetOwningPlayerController(), HUDWidgetClass);
 		if (HUDWidget) HUDWidget->AddToViewport();
 	}
