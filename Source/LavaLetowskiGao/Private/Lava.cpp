@@ -59,7 +59,16 @@ void ALava::Tick(float DeltaTime)
 
 void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Sweep)
 {
-	// TODO: Implement
+	const APawn* Pawn = Cast<APawn>(OtherActor);
+	if (Pawn != nullptr && Pawn->IsPlayerControlled())
+	{
+		GEngine->AddOnScreenDebugMessage(
+			2,
+			2.0f,
+			FColor::Red, 
+			TEXT("Lava collision")        
+		);
+	}
 }
 
 float ALava::GetRiseHeight() const
