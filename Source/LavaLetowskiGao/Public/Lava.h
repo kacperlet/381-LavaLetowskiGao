@@ -47,4 +47,7 @@ protected:
 
 	/** Recorded at BeginPlay so GetRiseHeight has something to measure from. */
 	float StartZ = 0.f;
+	
+	/** Used to prevent collisions being applied twice */
+	bool DamageImmunity = false; 
 };

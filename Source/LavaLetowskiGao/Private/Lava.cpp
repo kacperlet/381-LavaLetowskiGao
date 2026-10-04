@@ -64,7 +64,7 @@ void ALava::Tick(float DeltaTime)
 void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Sweep)
 {
 	APawn* Pawn = Cast<APawn>(OtherActor);
-	if (Pawn != nullptr && Pawn->IsPlayerControlled())
+	if (Pawn != nullptr && Pawn->IsPlayerControlled() && !DamageImmunity)
 	{
 		GEngine->AddOnScreenDebugMessage(
 			2,
@@ -75,14 +75,18 @@ void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 		
 		if (ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
 		{
+			DamageImmunity = true;
+			
+			// Move Lava Down
 			AddActorWorldOffset(FVector(0, 0, -500));
 			
-			
+			// Teleport player to last safe location
 			Cast<ALavaLetowskiGaoCharacter>(Pawn)->TeleportToLastSafeLocation();
 			
-			// should decrease number of lives
+			// decrease number of lives
 			Gm->ReportLifeLost();
 			
+			DamageImmunity = false;
 		}
 	}
 }
