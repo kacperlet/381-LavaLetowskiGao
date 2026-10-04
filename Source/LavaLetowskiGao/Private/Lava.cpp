@@ -34,6 +34,7 @@ void ALava::OnConstruction(const FTransform& Transform)
 	Super::OnConstruction(Transform);
 	
 	Volume->SetBoxExtent(FVector(SurfaceLength, SurfaceLength, 100.f));
+	Surface->SetRelativeLocation(FVector(0.f, 0.f, SurfaceZOffset));
 }
 
 // Called when the game starts or when spawned

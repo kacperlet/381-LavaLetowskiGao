@@ -44,6 +44,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category = "Tuning", meta = (ClampMin = "0.0", Units = "cm"))
 	float SurfaceLength = 1000.f;
+	
+	UPROPERTY(EditAnywhere, Category = "Tuning", meta = (ClampMin = "0.0", Units = "cm"))
+	float SurfaceZOffset = 110.f; // How much the surface is offset from the bounding volume
 
 	/** Recorded at BeginPlay so GetRiseHeight has something to measure from. */
 	float StartZ = 0.f;
