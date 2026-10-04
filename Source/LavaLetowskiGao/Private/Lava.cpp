@@ -33,7 +33,7 @@ void ALava::OnConstruction(const FTransform& Transform)
 {
 	Super::OnConstruction(Transform);
 	
-	Volume->SetBoxExtent(FVector(SurfaceLength, SurfaceLength, 10.f));
+	Volume->SetBoxExtent(FVector(SurfaceLength, SurfaceLength, 100.f));
 }
 
 // Called when the game starts or when spawned

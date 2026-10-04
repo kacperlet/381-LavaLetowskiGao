@@ -6,8 +6,6 @@
 #include "LavaHUD.h"
 #include "LavaLetowskiGaoPlayerController.h"
 #include "MenuHUD.h"
-
-// (may be optional)
 #include "Kismet/GameplayStatics.h"
 
 ALavaGameMode::ALavaGameMode()
@@ -91,25 +89,14 @@ void ALavaGameMode::UpdateCountdown()
 	}
 	else
 	{
-		// show result screen
-		if (const APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0)) // need to set the player who gets the screen
-		{
-			if (ALavaHUD* LavaHUD = Cast<ALavaHUD>(PC->GetHUD()))
-			{
-				// call the show result screen
-				const FText DeathMessage = FText::FromString(TEXT("Ran out of time D:"));
-				LavaHUD->ShowResultScreen(ResultWidgetClass, DeathMessage);
-			}
-		}
-		
-		GetWorldTimerManager().ClearTimer(LevelTimer); // stop timer
+		EndGame(false, TEXT("Ran out of time D:"));
 		
 		GEngine->AddOnScreenDebugMessage(
 			1,
 			2.0f,
 			FColor::Blue, 
 			TEXT("Timer Ended")        
-	);
+		);
 		// TODO: end game
 	}
 }
@@ -134,18 +121,9 @@ void ALavaGameMode::ReportKeyCollected()
 void ALavaGameMode::ReportLifeLost()
 {
 	LivesLeft--;
-	if (LivesLeft <= 0)
+	if (LivesLeft <= 0 && !IsGameOver)
 	{
-		// show result screen
-		if (const APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0)) // need to set the player who gets the screen
-		{
-			if (ALavaHUD* LavaHUD = Cast<ALavaHUD>(PC->GetHUD()))
-			{
-				// call the show result screen
-				const FText DeathMessage = FText::FromString(TEXT("Ran out of lives :C"));
-				LavaHUD->ShowResultScreen(ResultWidgetClass, DeathMessage);
-			}
-		}
+		EndGame(false, TEXT("Ran out of lives :C"));
 	}
 }
 
@@ -161,4 +139,28 @@ int32 ALavaGameMode::GetRiseHeight() const
 		return 0;
 	
 	return FMath::RoundToInt(Lava->GetRiseHeight());
+}
+
+void ALavaGameMode::EndGame(bool bWon, FString Reason)
+{
+	if (bWon)
+	{
+		// TODO:
+	}
+	else
+	{
+		// show result screen
+		if (const APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0)) // need to set the player who gets the screen
+		{
+			if (ALavaHUD* LavaHUD = Cast<ALavaHUD>(PC->GetHUD()))
+			{
+				// call the show result screen
+				const FText DeathMessage = FText::FromString(Reason);
+				LavaHUD->ShowResultScreen(ResultWidgetClass, DeathMessage);
+			}
+		}
+	}
+	
+	GetWorldTimerManager().ClearTimer(LevelTimer); // stop timer
+	IsGameOver = true;
 }

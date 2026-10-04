@@ -54,11 +54,13 @@ public:
 	void RegisterLava(ALava* LavaInput) { this->Lava = LavaInput; };
 	
 	int32 GetRiseHeight() const;
+	
+	bool IsGameOver = false;
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type Reason) override;
 
-	void EndGame(bool bWon);
+	void EndGame(bool bWon, FString Reason);
 	void HandleTimeExpired();
 
 	UPROPERTY(EditDefaultsOnly, Category = "Tuning", meta = (ClampMin = "1"))
