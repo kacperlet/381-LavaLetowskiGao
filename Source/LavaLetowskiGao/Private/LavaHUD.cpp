@@ -46,25 +46,22 @@ void ALavaHUD::Tick(float DeltaSeconds)
 	}
 }
 
-void ALavaHUD::ShowResultScreen(TSubclassOf<UResultWidget> WidgetClassToSpawn)
+void ALavaHUD::ShowResultScreen(TSubclassOf<UResultWidget> WidgetClassToSpawn, FText DeathMessage)
 {
 	// remove HUD widget from screen
 	if (HUDWidget)
 	{
 		HUDWidget->RemoveFromParent();
 	}
-
-	UResultWidget* ResultWidget = CreateWidget<UResultWidget>(GetWorld(), WidgetClassToSpawn);
 	// put Result widget
-	if (ResultWidget)
+	if (UResultWidget* ResultWidget = CreateWidget<UResultWidget>(GetWorld(), WidgetClassToSpawn))
 	{
 		// pass the HUD instance to the widget so it can run if-statements
-		ResultWidget->InitializeResultScreen(this);
+		ResultWidget->InitializeResultScreen(this, DeathMessage, false);
 		ResultWidget->AddToViewport();
 		
 		// make sure player has control so they can click the button
-		APlayerController* PlayerController = GetOwningPlayerController();
-		if (PlayerController)
+		if (APlayerController* PlayerController = GetOwningPlayerController())
 		{
 			PlayerController->SetShowMouseCursor(true);
 			

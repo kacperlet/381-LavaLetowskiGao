@@ -72,10 +72,10 @@ void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 			TEXT("Lava collision")        
 		);
 		
-		if (const ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
+		if (ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
 		{
-			// should call 'report lives lost' 
-			// gm should then tell the hud which ultimately calls the result widget
+			// should decrease number of lives
+			Gm->ReportLifeLost();
 		}
 	}
 }

@@ -26,6 +26,9 @@ class LAVALETOWSKIGAO_API UResultWidget : public UUserWidget
 	class UTextBlock* ResultText;
 	
 	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* DeathMessageText;
+	
+	UPROPERTY(meta = (BindWidget))
 	class UButton* ResultButton;
 	
 protected:
@@ -37,6 +40,6 @@ public:
 	TWeakObjectPtr<class ALavaHUD> OwningHUD;
 	
 	// pass in the HUD
-	void InitializeResultScreen(class ALavaHUD* OwningHUD);
+	void InitializeResultScreen(class ALavaHUD* OwningHUD, FText DeathMessage, bool bWin);
 };
 	

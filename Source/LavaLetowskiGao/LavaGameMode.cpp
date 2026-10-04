@@ -68,7 +68,7 @@ void ALavaGameMode::BeginPlay()
 	);
 	
 	// FOR TESTING ONLY -- SHORT TIMER
-	LevelSeconds = 10.f;
+	LevelSeconds = 30.f;
 	
 	// Start timer
 	GetWorldTimerManager().SetTimer(LevelTimer, this, &ALavaGameMode::UpdateCountdown, 1.0f, true);
@@ -92,14 +92,13 @@ void ALavaGameMode::UpdateCountdown()
 	else
 	{
 		// show result screen
-		APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0); // need to set the player who gets the screen
-		if (PC)
+		if (const APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0)) // need to set the player who gets the screen
 		{
-			ALavaHUD* LavaHUD = Cast<ALavaHUD>(PC->GetHUD());
-			if (LavaHUD)
+			if (ALavaHUD* LavaHUD = Cast<ALavaHUD>(PC->GetHUD()))
 			{
 				// call the show result screen
-				LavaHUD->ShowResultScreen(ResultWidgetClass);
+				const FText DeathMessage = FText::FromString(TEXT("Ran out of time D:"));
+				LavaHUD->ShowResultScreen(ResultWidgetClass, DeathMessage);
 			}
 		}
 		
@@ -134,13 +133,26 @@ void ALavaGameMode::ReportKeyCollected()
 /** The character touched lava. */
 void ALavaGameMode::ReportLifeLost()
 {
-	// TODO: Implement
+	LivesLeft--;
+	if (LivesLeft <= 0)
+	{
+		// show result screen
+		if (const APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0)) // need to set the player who gets the screen
+		{
+			if (ALavaHUD* LavaHUD = Cast<ALavaHUD>(PC->GetHUD()))
+			{
+				// call the show result screen
+				const FText DeathMessage = FText::FromString(TEXT("Ran out of lives :C"));
+				LavaHUD->ShowResultScreen(ResultWidgetClass, DeathMessage);
+			}
+		}
+	}
 }
 
 /** The player reached the hatch. The hatch does not check the keys itself. */
 void ALavaGameMode::ReportHatchReached()
 {
-	// TODO: implement
+	// TODO: Implement
 }
 
 int32 ALavaGameMode::GetRiseHeight() const

@@ -27,7 +27,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "UI")
 	TSubclassOf<ULavaHUDWidget> HUDWidgetClass;
 	
-	virtual void ShowResultScreen(TSubclassOf<UResultWidget> WidgetClassToSpawn);
+	virtual void ShowResultScreen(TSubclassOf<UResultWidget> WidgetClassToSpawn, FText Text);
 	UPROPERTY(EditAnywhere, Category = "UI")
 	TSubclassOf<UResultWidget> ResultWidgetClass;
 
