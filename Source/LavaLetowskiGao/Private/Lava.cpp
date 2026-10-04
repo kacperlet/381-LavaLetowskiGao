@@ -26,7 +26,6 @@ ALava::ALava()
 	Volume->SetCollisionProfileName(TEXT("OverlapAllDynamic")); // non-blocking collision
 	Volume->SetGenerateOverlapEvents(true);
 	Surface->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-	Volume->OnComponentBeginOverlap.AddDynamic(this, &ALava::HandleOverlap);
 }
 
 void ALava::OnConstruction(const FTransform& Transform)
@@ -45,6 +44,11 @@ void ALava::BeginPlay()
 	if (Volume)
 	{
 		StartZ = Volume->GetComponentLocation().Z;
+		
+		if (!Volume->OnComponentBeginOverlap.IsAlreadyBound(this, &ALava::HandleOverlap))
+		{
+			Volume->OnComponentBeginOverlap.AddDynamic(this, &ALava::HandleOverlap);
+		}
 	}
 
 	// add lava to game-mode for easier access
@@ -68,8 +72,8 @@ void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 	if (Pawn != nullptr && Pawn->IsPlayerControlled() && !DamageImmunity)
 	{
 		GEngine->AddOnScreenDebugMessage(
-			2,
-			2.0f,
+			-1,
+			10.0f,
 			FColor::Red, 
 			TEXT("Lava collision")        
 		);
@@ -87,7 +91,7 @@ void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 			// decrease number of lives
 			Gm->ReportLifeLost();
 			
-			DamageImmunity = false;
+			GetWorldTimerManager().SetTimer(ImmunityTimer, [this]() { DamageImmunity = false; }, 0.5f, false);
 		}
 	}
 }

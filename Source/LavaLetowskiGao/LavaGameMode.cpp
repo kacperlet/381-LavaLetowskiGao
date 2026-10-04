@@ -67,9 +67,6 @@ void ALavaGameMode::BeginPlay()
 			TEXT("Timer Started")        
 	);
 	
-	// FOR TESTING ONLY -- SHORT TIMER
-	LevelSeconds = 30.f;
-	
 	// Start timer
 	GetWorldTimerManager().SetTimer(LevelTimer, this, &ALavaGameMode::UpdateCountdown, 1.0f, true);
 }

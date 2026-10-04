@@ -172,4 +172,11 @@ void ALavaLetowskiGaoCharacter::PostInitProperties()
 void ALavaLetowskiGaoCharacter::TeleportToLastSafeLocation()
 {
 	SetActorLocation(LastSafeLocation, false);
+	
+	GEngine->AddOnScreenDebugMessage(
+			-1,
+			10.0f,
+			FColor::Green, 
+			FString::Printf(TEXT("Teleported to %f %f %f"), LastSafeLocation.X, LastSafeLocation.Y, LastSafeLocation.Z)        
+		);
 }

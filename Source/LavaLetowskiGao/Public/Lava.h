@@ -53,4 +53,5 @@ protected:
 	
 	/** Used to prevent collisions being applied twice */
 	bool DamageImmunity = false; 
+	FTimerHandle ImmunityTimer;
 };
