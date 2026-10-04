@@ -7,6 +7,8 @@
 #include "LavaLetowskiGaoPlayerController.h"
 #include "MenuHUD.h"
 #include "Kismet/GameplayStatics.h"
+#include "GameFramework/Character.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 ALavaGameMode::ALavaGameMode()
 {
@@ -114,13 +116,20 @@ float ALavaGameMode::GetTimeRemaining() const
 /** A key was picked up. The key itself does not know what that means. */
 void ALavaGameMode::ReportKeyCollected()
 {
-	// TODO: Implement
+	KeysCollected++;
+	
+	// earn 200 points per key
+	Score += 200;
 }
 
 /** The character touched lava. */
 void ALavaGameMode::ReportLifeLost()
 {
 	LivesLeft--;
+	
+	// lose 100 points per life lost
+	Score -= 100;
+	
 	if (LivesLeft <= 0 && !IsGameOver)
 	{
 		EndGame(false, TEXT("Ran out of lives :C"));
@@ -130,7 +139,14 @@ void ALavaGameMode::ReportLifeLost()
 /** The player reached the hatch. The hatch does not check the keys itself. */
 void ALavaGameMode::ReportHatchReached()
 {
-	// TODO: Implement
+	
+	if (GetKeysCollected() == 3)
+	{
+		// open/destroy the hatch
+		
+		// end the game
+		EndGame(true, TEXT(""));
+	}
 }
 
 int32 ALavaGameMode::GetRiseHeight() const
@@ -143,24 +159,40 @@ int32 ALavaGameMode::GetRiseHeight() const
 
 void ALavaGameMode::EndGame(bool bWon, FString Reason)
 {
+	// stop all game elements (player movement and lava rising)
+	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
+	if (!PC) return;
+
+	// stop existing movement
+	if (ACharacter* Char = PC->GetCharacter())
+	{
+		UCharacterMovementComponent* Move = Char->GetCharacterMovement();
+		Move->StopMovementImmediately();
+		Move->DisableMovement();
+	}
+	
+	Lava->Destroy();
+	
+	// determine death message
+	// empty death message means win
+	FText DeathMessage = FText::GetEmpty();
 	if (bWon)
 	{
-		// TODO:
+		// if won, add points to score for every second left on the clock
+		Score += static_cast<int>(GetTimeRemaining());
 	}
 	else
 	{
-		// show result screen
-		if (const APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0)) // need to set the player who gets the screen
-		{
-			if (ALavaHUD* LavaHUD = Cast<ALavaHUD>(PC->GetHUD()))
-			{
-				// call the show result screen
-				const FText DeathMessage = FText::FromString(Reason);
-				LavaHUD->ShowResultScreen(ResultWidgetClass, DeathMessage);
-			}
-		}
+		// if lost, set a death message
+		DeathMessage = FText::FromString(Reason);
 	}
 	
+	// show result screen
+	if (ALavaHUD* LavaHUD = Cast<ALavaHUD>(PC->GetHUD()))
+	{
+		// call the show result screen
+		LavaHUD->ShowResultScreen(ResultWidgetClass, DeathMessage);
+	}
 	GetWorldTimerManager().ClearTimer(LevelTimer); // stop timer
 	IsGameOver = true;
 }

@@ -57,7 +57,7 @@ void ALavaHUD::ShowResultScreen(TSubclassOf<UResultWidget> WidgetClassToSpawn, F
 	if (UResultWidget* ResultWidget = CreateWidget<UResultWidget>(GetWorld(), WidgetClassToSpawn))
 	{
 		// pass the HUD instance to the widget so it can run if-statements
-		ResultWidget->InitializeResultScreen(this, DeathMessage, false);
+		ResultWidget->InitializeResultScreen(this, DeathMessage, DeathMessage.IsEmpty());
 		ResultWidget->AddToViewport();
 		
 		// make sure player has control so they can click the button

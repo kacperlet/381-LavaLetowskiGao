@@ -33,6 +33,18 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	TObjectPtr<USphereComponent> PickupRange;
 
+	// how fast the key spins
 	UPROPERTY(EditAnywhere, Category = "Tuning", meta = (Units = "deg/s"))
 	float SpinRate = 90.f;
+	
+	// Store the starting location of the actor
+	FVector InitialLocation;
+	
+	// how high the actor bobs
+	UPROPERTY(EditAnywhere, Category = "Tuning", meta = (Units = "cm"))
+	float BobAmplitude = 50.0f;
+
+	// How fast the actor bobs
+	UPROPERTY(EditAnywhere, Category = "Tuning", meta = (Units = "cm/s"))
+	float BobSpeed = 2.0f;
 };

@@ -9,22 +9,21 @@ void UResultWidget::InitializeResultScreen(ALavaHUD* LavaHUD, FText DeathMessage
 	// check that HUD and UI text element both exist
 	if (!LavaHUD || !ResultText) return;
 	
-	// pull data from HUD -- score / win
-	
-	// const ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>();
-	// int32 FinalScore = Gm->GetScore();
+	// pull data from GameMode -- score / win
+	const ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>();
+	int32 FinalScore = Gm->GetScore();
 	
 	if (bWin)
 	{
 		// Use FString for Dynamic Text (to include score)
-		// FString WinMessage = FString::Printf(TEXT("YOU WIN!\nFinal Score: %d"), FinalScore);
-		// ResultText->SetText(FText::FromString(WinMessage));
+		FString WinMessage = FString::Printf(TEXT("YOU WIN! Please play again!\nFinal Score: %d"), FinalScore);
+		ResultText->SetText(FText::FromString(WinMessage));
 		DeathMessageText->SetText(FText::FromString(TEXT("")));
 	}
 	else
 	{
-		FText LoseMessage = FText::FromString(TEXT("GAME OVER, Try Again!"));
-		ResultText->SetText(LoseMessage);
+		FString LoseMessage = FString::Printf(TEXT("Game Over! Try again!\nFinal Score: %d"), FinalScore);
+		ResultText->SetText(FText::FromString(LoseMessage));
 		DeathMessageText->SetText(DeathMessage);
 	}
 }
