@@ -4,6 +4,7 @@
 #include "Lava.h"
 
 #include "LavaGameMode.h"
+#include "LavaLetowskiGaoCharacter.h"
 #include "Components/BoxComponent.h"
 
 // Sets default values
@@ -62,7 +63,7 @@ void ALava::Tick(float DeltaTime)
 
 void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Sweep)
 {
-	const APawn* Pawn = Cast<APawn>(OtherActor);
+	APawn* Pawn = Cast<APawn>(OtherActor);
 	if (Pawn != nullptr && Pawn->IsPlayerControlled())
 	{
 		GEngine->AddOnScreenDebugMessage(
@@ -74,8 +75,14 @@ void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 		
 		if (ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
 		{
+			AddActorWorldOffset(FVector(0, 0, -500));
+			
+			
+			Cast<ALavaLetowskiGaoCharacter>(Pawn)->TeleportToLastSafeLocation();
+			
 			// should decrease number of lives
 			Gm->ReportLifeLost();
+			
 		}
 	}
 }

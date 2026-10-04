@@ -75,6 +75,25 @@ void ALavaLetowskiGaoCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 	}
 }
 
+// Called every frame
+void ALavaLetowskiGaoCharacter::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	
+	if (UCharacterMovementComponent* MoveComp = GetCharacterMovement())
+	{
+		if (!MoveComp->IsFalling())
+		{
+			FVector Location = MoveComp->GetActorLocation();
+			
+			if (FVector::Dist(Location, LastSafeLocation) >= 100)
+			{
+				LastSafeLocation = Location;
+			}
+		}
+	}
+}
+
 void ALavaLetowskiGaoCharacter::Move(const FInputActionValue& Value)
 {
 	// input is a Vector2D
@@ -148,4 +167,9 @@ void ALavaLetowskiGaoCharacter::PostInitProperties()
 		MoveComp->AirControl = AirControlVal;
 		MoveComp->GravityScale = GravityScaleVal;
 	}
+}
+
+void ALavaLetowskiGaoCharacter::TeleportToLastSafeLocation()
+{
+	SetActorLocation(LastSafeLocation, false);
 }

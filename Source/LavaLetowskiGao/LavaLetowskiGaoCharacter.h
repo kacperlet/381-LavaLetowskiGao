@@ -65,12 +65,14 @@ protected:
 	
 	UPROPERTY(EditAnywhere, Category="Tuning")
 	int32 JumpMaxCountVal = 2;
-
+	
+	FVector LastSafeLocation;
 public:
 
 	/** Constructor */
 	ALavaLetowskiGaoCharacter();	
-
+	
+	virtual void Tick(float DeltaTime) override;
 protected:
 
 	/** Initialize input action bindings */
@@ -101,6 +103,8 @@ public:
 	/** Handles jump pressed inputs from either controls or UI interfaces */
 	UFUNCTION(BlueprintCallable, Category="Input")
 	virtual void DoJumpEnd();
+	
+	void TeleportToLastSafeLocation();
 
 public:
 
