@@ -6,6 +6,7 @@
 #include "LavaHUD.h"
 #include "LavaLetowskiGaoPlayerController.h"
 #include "MenuHUD.h"
+#include "RoofHatch.h"
 #include "Kismet/GameplayStatics.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -140,8 +141,12 @@ void ALavaGameMode::ReportHatchReached()
 	if (GetKeysCollected() == 3)
 	{
 		// open/destroy the hatch
+		if (ARoofHatch* Hatch = Cast<ARoofHatch>(UGameplayStatics::GetActorOfClass(this, ARoofHatch::StaticClass())))
+		{
+			Hatch->OpenHatch();
+		}
 		
-		// end the game
+		// end the game when the player arrives on the roof
 		EndGame(true, TEXT(""));
 	}
 }
@@ -156,18 +161,22 @@ int32 ALavaGameMode::GetRiseHeight() const
 
 void ALavaGameMode::EndGame(bool bWon, FString Reason)
 {
-	// stop all game elements (player movement and lava rising)
 	APlayerController* PC = UGameplayStatics::GetPlayerController(this, 0);
 	if (!PC) return;
-
-	// stop existing movement
-	if (ACharacter* Char = PC->GetCharacter())
+	
+	// stop player movement if game lost
+	if (!bWon)
 	{
-		UCharacterMovementComponent* Move = Char->GetCharacterMovement();
-		Move->StopMovementImmediately();
-		Move->DisableMovement();
+		// stop existing movement
+		if (ACharacter* Char = PC->GetCharacter())
+		{
+			UCharacterMovementComponent* Move = Char->GetCharacterMovement();
+			Move->StopMovementImmediately();
+			Move->DisableMovement();
+		}
 	}
 	
+	// stop the lava
 	Lava->Destroy();
 	
 	// determine death message

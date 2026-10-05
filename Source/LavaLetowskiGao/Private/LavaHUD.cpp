@@ -65,10 +65,13 @@ void ALavaHUD::ShowResultScreen(TSubclassOf<UResultWidget> WidgetClassToSpawn, F
 		{
 			PlayerController->SetShowMouseCursor(true);
 			
-			// ensure player can only click on the widget UI
-			FInputModeUIOnly InputMode;
-			InputMode.SetWidgetToFocus(ResultWidget->TakeWidget());
-			PlayerController->SetInputMode(InputMode);
+			if (!DeathMessage.IsEmpty())
+			{
+				// ensure player can only click on the widget UI if they lost
+				FInputModeUIOnly InputMode;
+				InputMode.SetWidgetToFocus(ResultWidget->TakeWidget());
+				PlayerController->SetInputMode(InputMode);
+			}	
 		}
 	}
 }

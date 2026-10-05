@@ -19,6 +19,10 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	FVector StartLocation;
+	FVector EndLocation;
+	bool bOpening = false;
 	
 	UFUNCTION()
 	void HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor,
@@ -28,6 +32,8 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	
+	void OpenHatch();
 	
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
