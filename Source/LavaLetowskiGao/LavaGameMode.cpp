@@ -143,7 +143,7 @@ void ALavaGameMode::ReportHatchSubmerged()
 void ALavaGameMode::ReportHatchReached()
 {
 	
-	if (GetKeysCollected() == 3)
+	if (GetKeysCollected() >= 3)
 	{
 		// open/destroy the hatch
 		if (ARoofHatch* Hatch = Cast<ARoofHatch>(UGameplayStatics::GetActorOfClass(this, ARoofHatch::StaticClass())))

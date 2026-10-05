@@ -65,7 +65,7 @@ void ALava::Tick(float DeltaTime)
 	
 	AddActorWorldOffset(FVector(0, 0, RiseRate * DeltaTime));
 	
-	if (GetRiseHeight() >= 5000)
+	if (GetRiseHeight() >= 6500)
 	{
 		if (ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
 		{
