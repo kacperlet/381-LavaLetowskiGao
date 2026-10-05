@@ -29,3 +29,11 @@ void ULavaHUDWidget::SetScore(int32 Score) const
 {
 	ScoreText->SetText(FText::FromString(FString::Printf(TEXT("%d Points"), Score)));
 }
+
+void ULavaHUDWidget::SetHurtOverlayVisible(bool bVisible) const
+{
+	if (HurtOverlayImage)
+	{
+		HurtOverlayImage->SetVisibility(bVisible ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
+	}
+}

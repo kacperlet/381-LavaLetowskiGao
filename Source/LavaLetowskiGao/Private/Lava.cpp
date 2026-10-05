@@ -98,8 +98,9 @@ void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 			
 			// decrease number of lives
 			Gm->ReportLifeLost();
+			Gm->IsPlayerInjured = true;
 			
-			GetWorldTimerManager().SetTimer(ImmunityTimer, [this]() { DamageImmunity = false; }, 0.5f, false);
+			GetWorldTimerManager().SetTimer(ImmunityTimer, [this]() { DamageImmunity = false; GetWorld()->GetAuthGameMode<ALavaGameMode>()->IsPlayerInjured = false;}, 0.5f, false);
 		}
 	}
 }

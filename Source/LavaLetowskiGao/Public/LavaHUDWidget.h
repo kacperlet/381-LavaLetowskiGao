@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Components/Image.h"
 #include "Components/TextBlock.h"
 #include "LavaHUDWidget.generated.h"
 
@@ -20,6 +21,7 @@ public:
 	void SetLivesRemaining(int32 Lives) const;
 	void SetLavaHeight(int32 LavaHeight) const;
 	void SetScore(int32 Score) const;
+	void SetHurtOverlayVisible(bool bVisible) const;
 
 protected:
 	UPROPERTY(meta = (BindWidget)) UTextBlock* TimeText;
@@ -27,4 +29,5 @@ protected:
 	UPROPERTY(meta = (BindWidget)) UTextBlock* LivesText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* LavaHeightText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* ScoreText;
+	UPROPERTY(meta = (BindWidget)) UImage* HurtOverlayImage;
 };

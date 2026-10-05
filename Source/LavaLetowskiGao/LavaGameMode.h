@@ -59,6 +59,7 @@ public:
 	int32 GetRiseHeight() const;
 	
 	bool IsGameOver = false;
+	bool IsPlayerInjured = false;
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type Reason) override;
