@@ -100,7 +100,10 @@ void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 			Gm->ReportLifeLost();
 			Gm->IsPlayerInjured = true;
 			
-			GetWorldTimerManager().SetTimer(ImmunityTimer, [this]() { DamageImmunity = false; GetWorld()->GetAuthGameMode<ALavaGameMode>()->IsPlayerInjured = false;}, 0.5f, false);
+			// Freeze Character
+			Cast<ALavaLetowskiGaoCharacter>(Pawn)->FreezeCharacter();
+			
+			GetWorldTimerManager().SetTimer(ImmunityTimer, [this]() { UnFreeze();}, 0.5f, false);
 		}
 	}
 }
@@ -110,3 +113,20 @@ float ALava::GetRiseHeight() const
 	return Volume->GetComponentLocation().Z - StartZ;
 }
 
+
+/** Called after a player is frozen from lava */
+void ALava::UnFreeze()
+{
+	DamageImmunity = false; 
+	
+	if (ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
+	{
+		Gm->IsPlayerInjured = false;
+	}
+	
+	if (ALavaLetowskiGaoCharacter* PC = Cast<ALavaLetowskiGaoCharacter>(GetWorld()->GetFirstPlayerController()->GetPawn()))
+	{
+		PC->UnFreezeCharacter();
+	}
+	
+}

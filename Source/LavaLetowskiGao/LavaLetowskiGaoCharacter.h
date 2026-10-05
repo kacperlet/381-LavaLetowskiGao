@@ -105,6 +105,10 @@ public:
 	virtual void DoJumpEnd();
 	
 	void TeleportToLastSafeLocation();
+	
+	void FreezeCharacter();
+	
+	void UnFreezeCharacter();
 
 public:
 

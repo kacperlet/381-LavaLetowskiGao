@@ -180,3 +180,19 @@ void ALavaLetowskiGaoCharacter::TeleportToLastSafeLocation()
 			FString::Printf(TEXT("Teleported to %f %f %f"), LastSafeLocation.X, LastSafeLocation.Y, LastSafeLocation.Z)        
 		);
 }
+
+void ALavaLetowskiGaoCharacter::FreezeCharacter()
+{
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		DisableInput(PC);
+	}
+}
+
+void ALavaLetowskiGaoCharacter::UnFreezeCharacter()
+{
+	if (APlayerController* PC = Cast<APlayerController>(GetController()))
+	{
+		EnableInput(PC);
+	}
+}
