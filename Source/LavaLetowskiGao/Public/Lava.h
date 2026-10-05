@@ -23,6 +23,8 @@ public:
 	float GetRiseHeight() const;
 	
 	virtual void OnConstruction(const FTransform& Transform) override;
+	
+	void SetLavaSpeed(float Speed);
 protected:
 	virtual void BeginPlay() override;
 	// The signature must match FComponentBeginOverlapSignature exactly,

@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "LavaGameMode.h"
 #include "LavaLetowskiGao.h"
 
 ALavaLetowskiGaoCharacter::ALavaLetowskiGaoCharacter()
@@ -68,6 +69,10 @@ void ALavaLetowskiGaoCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ALavaLetowskiGaoCharacter::Look);
+		
+		// Cheat Functions
+		PlayerInputComponent->BindKey(EKeys::K, IE_Pressed, this, &ALavaLetowskiGaoCharacter::GiveAllKeysCheat);
+		PlayerInputComponent->BindKey(EKeys::L, IE_Pressed, this, &ALavaLetowskiGaoCharacter::SpeedUpLavaCheat);
 	}
 	else
 	{
@@ -194,5 +199,38 @@ void ALavaLetowskiGaoCharacter::UnFreezeCharacter()
 	if (APlayerController* PC = Cast<APlayerController>(GetController()))
 	{
 		EnableInput(PC);
+	}
+}
+
+void ALavaLetowskiGaoCharacter::GiveAllKeysCheat()
+{
+	if (ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
+	{
+		// increment number of keys collected
+		Gm->ReportKeyCollected();
+		Gm->ReportKeyCollected();
+		Gm->ReportKeyCollected();
+		
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			5.0f,
+			FColor::Green, 
+			FString::Printf(TEXT("Keys Added"))        
+		);
+	}
+}
+
+void ALavaLetowskiGaoCharacter::SpeedUpLavaCheat()
+{
+	if (ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			5.0f,
+			FColor::Green, 
+			FString::Printf(TEXT("Lava Quicker"))        
+		);
+		
+		Gm->SetLavaSpeed(240);
 	}
 }

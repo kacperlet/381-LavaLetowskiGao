@@ -128,5 +128,9 @@ void ALava::UnFreeze()
 	{
 		PC->UnFreezeCharacter();
 	}
-	
+}
+
+void ALava::SetLavaSpeed(float Speed)
+{
+	RiseRate = Speed;
 }

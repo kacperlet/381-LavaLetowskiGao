@@ -109,6 +109,10 @@ public:
 	void FreezeCharacter();
 	
 	void UnFreezeCharacter();
+	
+	void GiveAllKeysCheat();
+	
+	void SpeedUpLavaCheat();
 
 public:
 

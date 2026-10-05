@@ -207,3 +207,8 @@ void ALavaGameMode::EndGame(bool bWon, FString Reason)
 	GetWorldTimerManager().ClearTimer(LevelTimer); // stop timer
 	IsGameOver = true;
 }
+
+void ALavaGameMode::SetLavaSpeed(float Speed)
+{
+	Lava->SetLavaSpeed(Speed);
+}

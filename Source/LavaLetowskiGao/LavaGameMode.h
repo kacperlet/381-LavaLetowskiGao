@@ -60,6 +60,8 @@ public:
 	
 	bool IsGameOver = false;
 	bool IsPlayerInjured = false;
+	
+	void SetLavaSpeed(float Speed);
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type Reason) override;
@@ -94,4 +96,6 @@ protected:
 	bool bGameOver = false;
 	FTimerHandle LevelTimer;
 	void UpdateCountdown();
+	
+	
 };
