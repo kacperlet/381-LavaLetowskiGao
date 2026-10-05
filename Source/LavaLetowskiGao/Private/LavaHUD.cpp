@@ -43,6 +43,7 @@ void ALavaHUD::Tick(float DeltaSeconds)
 		HUDWidget->SetLivesRemaining(Gm->GetLivesLeft());
 		HUDWidget->SetLavaHeight(Gm->GetRiseHeight());
 		HUDWidget->SetScore(Gm->GetScore());
+		HUDWidget->SetHurtOverlayVisible(Gm->IsPlayerInjured);
 	}
 }
 
