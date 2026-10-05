@@ -27,6 +27,9 @@ public:
 	/** The player reached the hatch. The hatch does not check the keys itself. */
 	UFUNCTION(BlueprintCallable, Category = "Rules")
 	void ReportHatchReached();
+	
+	UFUNCTION(BlueprintCallable, Category = "Rules")
+	void ReportHatchSubmerged();
 
 	UFUNCTION(BlueprintPure, Category = "Rules")
 	bool HasAllKeys() const { return KeysCollected >= KeysRequired; }

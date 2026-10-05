@@ -64,6 +64,14 @@ void ALava::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	AddActorWorldOffset(FVector(0, 0, RiseRate * DeltaTime));
+	
+	if (GetRiseHeight() >= 5000)
+	{
+		if (ALavaGameMode* Gm = GetWorld()->GetAuthGameMode<ALavaGameMode>())
+		{
+			Gm->ReportHatchSubmerged();
+		}
+	}
 }
 
 void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& Sweep)

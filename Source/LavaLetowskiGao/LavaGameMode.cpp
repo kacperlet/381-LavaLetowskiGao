@@ -134,6 +134,11 @@ void ALavaGameMode::ReportLifeLost()
 	}
 }
 
+void ALavaGameMode::ReportHatchSubmerged()
+{
+	EndGame(false, TEXT("The hatch has been submerged :<"));
+}
+
 /** The player reached the hatch. The hatch does not check the keys itself. */
 void ALavaGameMode::ReportHatchReached()
 {
