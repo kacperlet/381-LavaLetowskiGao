@@ -9,8 +9,8 @@ UInventoryComponent::UInventoryComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 	
 	// Add item slots
-	Slots.Add(EItemSlot::Cushion, {nullptr, 3, 0});
-	Slots.Add(EItemSlot::Extinguisher, {nullptr, 3, 0});
+	Slots.Add(EItemSlot::Cushion, {nullptr, 3, 1});
+	Slots.Add(EItemSlot::Extinguisher, {nullptr, 3, 3});
 }
 
 
@@ -32,7 +32,17 @@ void UInventoryComponent::EquipSlot(EItemSlot Slot)
 
 void UInventoryComponent::ThrowEquipped()
 {
-	// TODO: implement
+	FInventorySlot* Equipped = Slots.Find(EquippedSlot);
+	if (Equipped->Count > 0)
+	{
+		// TODO: instantiate it and use the class
+		
+		Equipped->Count--;
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("No items left to throw!"));
+	}
 }
 
 int32 UInventoryComponent::GetCount(EItemSlot Slot) const

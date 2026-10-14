@@ -3,11 +3,13 @@
 
 #include "LavaLetowskiGaoPlayerController.h"
 #include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
 #include "Engine/LocalPlayer.h"
 #include "InputMappingContext.h"
 #include "Blueprint/UserWidget.h"
 #include "LavaLetowskiGao.h"
 #include "Widgets/Input/SVirtualJoystick.h"
+
 
 ALavaLetowskiGaoPlayerController::ALavaLetowskiGaoPlayerController()
 {
@@ -63,6 +65,14 @@ void ALavaLetowskiGaoPlayerController::SetupInputComponent()
 				}
 			}
 		}
+		
+		if (InputComponent)
+		{
+			InputComponent->BindKey(EKeys::One, IE_Pressed, this, &ALavaLetowskiGaoPlayerController::SelectCushionItem);
+			InputComponent->BindKey(EKeys::Two, IE_Pressed, this, &ALavaLetowskiGaoPlayerController::SelectExtinguisherItem);
+			InputComponent->BindKey(EKeys::LeftMouseButton, IE_Pressed, this, &ALavaLetowskiGaoPlayerController::UseItem);
+		}
+		
 	}
 }
 
@@ -75,4 +85,19 @@ bool ALavaLetowskiGaoPlayerController::ShouldUseTouchControls() const
 int32 ALavaLetowskiGaoPlayerController::GetItemCount(EItemSlot Slot) const
 {
 	return InventoryComponent->GetCount(Slot);
+}
+
+void ALavaLetowskiGaoPlayerController::SelectCushionItem()
+{
+	InventoryComponent->EquipSlot(EItemSlot::Cushion);
+}
+
+void ALavaLetowskiGaoPlayerController::SelectExtinguisherItem() 
+{
+	InventoryComponent->EquipSlot(EItemSlot::Extinguisher);
+}
+
+void ALavaLetowskiGaoPlayerController::UseItem() 
+{
+	InventoryComponent->ThrowEquipped();
 }

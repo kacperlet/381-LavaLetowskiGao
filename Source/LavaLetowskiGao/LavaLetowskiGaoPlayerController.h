@@ -57,4 +57,11 @@ protected:
 	/** Player Inventory Component */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UInventoryComponent* InventoryComponent;
+	
+	void SelectCushionItem();
+	
+	void SelectExtinguisherItem();
+	
+	/** Use the currently select item, if possible*/
+	void UseItem();
 };
