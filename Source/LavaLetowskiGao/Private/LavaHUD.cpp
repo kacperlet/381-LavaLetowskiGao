@@ -50,6 +50,7 @@ void ALavaHUD::Tick(float DeltaSeconds)
 	if (const ALavaLetowskiGaoPlayerController* PC = Cast<ALavaLetowskiGaoPlayerController>(GetWorld()->GetFirstPlayerController()))
 	{
 		HUDWidget->SetInventorySlots(PC->GetItemCount(EItemSlot::Cushion), PC->GetItemCount(EItemSlot::Extinguisher));
+		HUDWidget->SetSelectedInventorySlot(PC->GetSelectedItem());
 	}
 }
 

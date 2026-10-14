@@ -87,6 +87,11 @@ int32 ALavaLetowskiGaoPlayerController::GetItemCount(EItemSlot Slot) const
 	return InventoryComponent->GetCount(Slot);
 }
 
+EItemSlot ALavaLetowskiGaoPlayerController::GetSelectedItem() const
+{
+	return InventoryComponent->GetEquipped();
+}
+
 void ALavaLetowskiGaoPlayerController::SelectCushionItem()
 {
 	InventoryComponent->EquipSlot(EItemSlot::Cushion);

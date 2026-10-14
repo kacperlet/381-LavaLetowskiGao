@@ -25,6 +25,7 @@ public:
 	void SetScore(int32 Score) const;
 	void SetHurtOverlayVisible(bool bVisible) const;
 	void SetInventorySlots(int32 Cushions, int32 FireExtinguishers) const;
+	void SetSelectedInventorySlot(EItemSlot Slot) const;
 
 protected:
 	UPROPERTY(meta = (BindWidget)) UTextBlock* TimeText;

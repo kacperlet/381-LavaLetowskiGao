@@ -43,3 +43,20 @@ void ULavaHUDWidget::SetInventorySlots(int32 Cushions, int32 FireExtinguishers) 
 	ItemsCushion->SetQuantity(Cushions);
 	ItemsExtinguisher->SetQuantity(FireExtinguishers);
 }
+
+void ULavaHUDWidget::SetSelectedInventorySlot(EItemSlot Slot) const
+{
+	switch (Slot)
+	{
+		case EItemSlot::Cushion:
+			ItemsCushion->SetIsSelected(true);
+			ItemsExtinguisher->SetIsSelected(false);
+			break;
+		case EItemSlot::Extinguisher:
+			ItemsCushion->SetIsSelected(false);
+			ItemsExtinguisher->SetIsSelected(true);
+			break;
+		default:
+			return;
+	}
+}

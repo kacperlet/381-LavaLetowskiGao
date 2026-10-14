@@ -50,6 +50,11 @@ int32 UInventoryComponent::GetCount(EItemSlot Slot) const
 	return Slots.Find(Slot)->Count;
 }
 
+EItemSlot UInventoryComponent::GetEquipped() const
+{
+	return EquippedSlot;
+}
+
 void UInventoryComponent::RefreshHeldActor()
 {
 	// TODO: implement

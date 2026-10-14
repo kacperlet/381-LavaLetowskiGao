@@ -9,6 +9,18 @@ void UItemSlotWidget::SetQuantity(int32 Quantity) const
 	ItemQuantityText->SetText(FText::FromString(FString::Printf(TEXT("%d"), Quantity)));
 }
 
+void UItemSlotWidget::SetIsSelected(bool IsSelected) const
+{
+	if (IsSelected)
+	{
+		Border->SetBrushColor(SelectedColor);
+	}
+	else
+	{
+		Border->SetBrushColor(UnSelectedColor);
+	}
+}
+
 void UItemSlotWidget::NativePreConstruct()
 {
     Super::NativePreConstruct();

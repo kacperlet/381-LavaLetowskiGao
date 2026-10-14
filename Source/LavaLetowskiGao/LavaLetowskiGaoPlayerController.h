@@ -23,6 +23,8 @@ public:
 	
 	UFUNCTION(BlueprintPure, Category = "Inventory")
 	int32 GetItemCount(EItemSlot Slot) const;
+	
+	EItemSlot GetSelectedItem() const;
 protected:
 
 	/** Input Mapping Contexts */
