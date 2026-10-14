@@ -37,3 +37,8 @@ void ULavaHUDWidget::SetHurtOverlayVisible(bool bVisible) const
 		HurtOverlayImage->SetVisibility(bVisible ? ESlateVisibility::Visible : ESlateVisibility::Collapsed);
 	}
 }
+
+void ULavaHUDWidget::SetInventorySlots(UInventoryComponent* Inventory) const
+{
+	
+}

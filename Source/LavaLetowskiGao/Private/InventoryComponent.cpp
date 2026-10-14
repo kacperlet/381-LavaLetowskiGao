@@ -6,23 +6,28 @@
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
+	PrimaryComponentTick.bCanEverTick = false;
+	
+	// Add item slots
+	Slots.Add(EItemSlot::Cushion, {nullptr, 3, 0});
+	Slots.Add(EItemSlot::Extinguisher, {nullptr, 3, 0});
 }
 
 
 bool UInventoryComponent::AddItem(EItemSlot Slot)
 {
-	// TODO: implement
+	FInventorySlot* selectedSlot = Slots.Find(Slot);
+	if (selectedSlot && selectedSlot->Count < selectedSlot->Capacity)
+	{
+		selectedSlot->Count++;
+		return true;
+	}
 	return false;
 }
 
 void UInventoryComponent::EquipSlot(EItemSlot Slot)
 {
-	// TODO: implement
+	EquippedSlot = Slot;
 }
 
 void UInventoryComponent::ThrowEquipped()
@@ -32,8 +37,7 @@ void UInventoryComponent::ThrowEquipped()
 
 int32 UInventoryComponent::GetCount(EItemSlot Slot) const
 {
-	// TODO: implement
-	return 0;
+	return Slots.Find(Slot)->Count;
 }
 
 void UInventoryComponent::RefreshHeldActor()

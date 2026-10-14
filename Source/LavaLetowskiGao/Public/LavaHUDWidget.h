@@ -3,6 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InventoryComponent.h"
+#include "ItemSlotWidget.h"
 #include "Blueprint/UserWidget.h"
 #include "Components/Image.h"
 #include "Components/TextBlock.h"
@@ -22,6 +24,7 @@ public:
 	void SetLavaHeight(int32 LavaHeight) const;
 	void SetScore(int32 Score) const;
 	void SetHurtOverlayVisible(bool bVisible) const;
+	void SetInventorySlots(UInventoryComponent* Inventory) const;
 
 protected:
 	UPROPERTY(meta = (BindWidget)) UTextBlock* TimeText;
@@ -30,4 +33,6 @@ protected:
 	UPROPERTY(meta = (BindWidget)) UTextBlock* LavaHeightText;
 	UPROPERTY(meta = (BindWidget)) UTextBlock* ScoreText;
 	UPROPERTY(meta = (BindWidget)) UImage* HurtOverlayImage;
+	UPROPERTY(meta = (BindWidget)) UItemSlotWidget* ItemsCushion;
+	UPROPERTY(meta = (BindWidget)) UItemSlotWidget* ItemsExtinguisher;
 };
