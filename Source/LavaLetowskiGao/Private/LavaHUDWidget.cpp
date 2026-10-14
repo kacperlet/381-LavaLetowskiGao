@@ -38,7 +38,8 @@ void ULavaHUDWidget::SetHurtOverlayVisible(bool bVisible) const
 	}
 }
 
-void ULavaHUDWidget::SetInventorySlots(UInventoryComponent* Inventory) const
+void ULavaHUDWidget::SetInventorySlots(int32 Cushions, int32 FireExtinguishers) const
 {
-	
+	ItemsCushion->SetQuantity(Cushions);
+	ItemsExtinguisher->SetQuantity(FireExtinguishers);
 }

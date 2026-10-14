@@ -4,6 +4,7 @@
 #include "LavaHUD.h"
 #include "LavaHUDWidget.h"
 #include "LavaGameMode.h"
+#include "LavaLetowskiGaoPlayerController.h"
 #include "ResultWidget.h"
 
 ALavaHUD::ALavaHUD()
@@ -44,6 +45,11 @@ void ALavaHUD::Tick(float DeltaSeconds)
 		HUDWidget->SetLavaHeight(Gm->GetRiseHeight());
 		HUDWidget->SetScore(Gm->GetScore());
 		HUDWidget->SetHurtOverlayVisible(Gm->IsPlayerInjured);
+	}
+	
+	if (const ALavaLetowskiGaoPlayerController* PC = Cast<ALavaLetowskiGaoPlayerController>(GetWorld()->GetFirstPlayerController()))
+	{
+		HUDWidget->SetInventorySlots(PC->GetItemCount(EItemSlot::Cushion), PC->GetItemCount(EItemSlot::Extinguisher));
 	}
 }
 

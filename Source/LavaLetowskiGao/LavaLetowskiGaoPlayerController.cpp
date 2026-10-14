@@ -9,6 +9,12 @@
 #include "LavaLetowskiGao.h"
 #include "Widgets/Input/SVirtualJoystick.h"
 
+ALavaLetowskiGaoPlayerController::ALavaLetowskiGaoPlayerController()
+{
+	// Attach inventory component
+	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>("InventoryComponent");
+}
+
 void ALavaLetowskiGaoPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -64,4 +70,9 @@ bool ALavaLetowskiGaoPlayerController::ShouldUseTouchControls() const
 {
 	// are we on a mobile platform? Should we force touch?
 	return SVirtualJoystick::ShouldDisplayTouchInterface() || bForceTouchControls;
+}
+
+int32 ALavaLetowskiGaoPlayerController::GetItemCount(EItemSlot Slot) const
+{
+	return InventoryComponent->GetCount(Slot);
 }

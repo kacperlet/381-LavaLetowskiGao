@@ -24,7 +24,7 @@ public:
 	void SetLavaHeight(int32 LavaHeight) const;
 	void SetScore(int32 Score) const;
 	void SetHurtOverlayVisible(bool bVisible) const;
-	void SetInventorySlots(UInventoryComponent* Inventory) const;
+	void SetInventorySlots(int32 Cushions, int32 FireExtinguishers) const;
 
 protected:
 	UPROPERTY(meta = (BindWidget)) UTextBlock* TimeText;

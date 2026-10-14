@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "InventoryComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "LavaLetowskiGaoPlayerController.generated.h"
 
@@ -17,7 +18,11 @@ UCLASS(abstract)
 class ALavaLetowskiGaoPlayerController : public APlayerController
 {
 	GENERATED_BODY()
+public:
+	ALavaLetowskiGaoPlayerController();
 	
+	UFUNCTION(BlueprintPure, Category = "Inventory")
+	int32 GetItemCount(EItemSlot Slot) const;
 protected:
 
 	/** Input Mapping Contexts */
@@ -48,5 +53,8 @@ protected:
 
 	/** Returns true if the player should use UMG touch controls */
 	bool ShouldUseTouchControls() const;
-
+	
+	/** Player Inventory Component */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UInventoryComponent* InventoryComponent;
 };
