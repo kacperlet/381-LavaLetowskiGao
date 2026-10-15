@@ -35,6 +35,11 @@ protected:
 	// UMG Construct Graph
 	virtual void NativeConstruct() override;
 	
+	UFUNCTION()
+	void OnButtonClicked();
+	
+	bool Won;
+	
 public:	
 	// the HUD
 	TWeakObjectPtr<class ALavaHUD> OwningHUD;

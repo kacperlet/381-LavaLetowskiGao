@@ -3,6 +3,7 @@
 
 #include "LavaGameMode.h"
 
+#include "LavaGameInstance.h"
 #include "LavaHUD.h"
 #include "LavaLetowskiGaoPlayerController.h"
 #include "MenuHUD.h"
@@ -57,7 +58,7 @@ void ALavaGameMode::BeginPlay()
 		PC->SetShowMouseCursor(false);
 		FInputModeGameOnly InputMode;
 		PC->SetInputMode(InputMode);
-        // set viewport as focus
+		// set viewport as focus
 		FSlateApplication::Get().SetAllUserFocusToGameViewport();
 	}
 	
@@ -70,6 +71,12 @@ void ALavaGameMode::BeginPlay()
 	
 	// Start timer
 	GetWorldTimerManager().SetTimer(LevelTimer, this, &ALavaGameMode::UpdateCountdown, 1.0f, true);
+	
+	// Transfer inter-level score
+	if (ULavaGameInstance* GI = Cast<ULavaGameInstance>(GetGameInstance()))
+	{
+		Score = GI->Score;
+	}
 }
 
 void ALavaGameMode::UpdateCountdown()
