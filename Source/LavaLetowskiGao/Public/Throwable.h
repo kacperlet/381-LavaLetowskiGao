@@ -2,10 +2,21 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/StaticMeshComponent.h"
+#include "GameFramework/ProjectileMovementComponent.h"
+#include "LavaLetowskiGaoCharacter.h"
 #include "Throwable.generated.h"
 
 class UStaticMeshComponent;
 class UProjectileMovementComponent;
+
+UENUM()
+enum class EThrowableState : uint8
+{
+    Idle,
+    Carried,
+    Thrown
+};
 
 UCLASS(Abstract)
 class LAVALETOWSKIGAO_API AThrowable : public AActor
@@ -38,4 +49,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Tuning", meta = (ClampMin = "0.0"))
 	float ThrowSpeed = 1600.f;
+
+	UPROPERTY()
+    EThrowableState State = EThrowableState::Idle;
 };

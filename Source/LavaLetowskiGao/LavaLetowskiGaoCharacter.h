@@ -12,6 +12,7 @@ class USpringArmComponent;
 class UCameraComponent;
 class UInputAction;
 struct FInputActionValue;
+class AThrowable;
 
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
@@ -121,5 +122,15 @@ public:
 
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	
+	// DEBUG THROWABLE ***************************************************************************************
+	UPROPERTY(EditDefaultsOnly, Category="Debug")
+	TSubclassOf<AThrowable> DebugThrowableClass;
+
+	UPROPERTY()
+	AThrowable* HeldThrowable = nullptr;
+
+	void DebugPickUp();
+	void DebugThrow();
 };
 
