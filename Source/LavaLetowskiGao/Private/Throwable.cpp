@@ -3,6 +3,8 @@
 
 #include "Throwable.h"
 
+#include "SprinklerTarget.h"
+
 // Sets default values
 AThrowable::AThrowable()
 {
@@ -31,6 +33,7 @@ void AThrowable::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	Mesh->OnComponentHit.AddDynamic(this, &AThrowable::HandleHit);
 }
 
 void AThrowable::Throw(const FVector& Direction)
@@ -92,6 +95,18 @@ void AThrowable::HandleHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPr
     {
         return;
     }
+	
+	GEngine->AddOnScreenDebugMessage(
+		-1, 
+		2.0f,
+		FColor::Blue, 
+		TEXT("Throwable hit surface!") 
+	);
+	
+	if (ASprinklerTarget* Target = Cast<ASprinklerTarget>(OtherActor))
+	{
+		Target->HandleHit();
+	}
 
     // disappear
     Destroy();
