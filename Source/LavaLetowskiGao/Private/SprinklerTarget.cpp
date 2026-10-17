@@ -68,7 +68,13 @@ void ASprinklerTarget::HandleHit()
 			2.0f,
 			FColor::Blue, 
 			TEXT("Material Failed") 
-		);
+			);
+		}
+		
+		// Turn on water sprinkler effect
+		if (Sprinkler)
+		{
+			Sprinkler->StartSprinkler();
 		}
 		
 		// TODO: remove fire barrier

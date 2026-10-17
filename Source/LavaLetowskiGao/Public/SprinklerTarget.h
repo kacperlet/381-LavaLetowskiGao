@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Sprinkler.h"
 #include "GameFramework/Actor.h"
 #include "SprinklerTarget.generated.h"
 
@@ -17,20 +18,22 @@ public:
 	
 	// Called by throwable on hit
 	void HandleHit();
+
+protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	TObjectPtr<UStaticMeshComponent> Mesh;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Materials")
 	class UMaterialInterface* Material;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Materials")
 	class UMaterialInterface* HitMaterial;
-
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
 	
-	
-	UPROPERTY(VisibleAnywhere, Category = "Components")
-	TObjectPtr<UStaticMeshComponent> Mesh;
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Config")
+	TObjectPtr<ASprinkler> Sprinkler;
 	
 	bool WasHit = false;
 
