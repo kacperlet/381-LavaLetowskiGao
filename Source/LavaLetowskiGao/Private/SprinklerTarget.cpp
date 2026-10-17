@@ -71,13 +71,17 @@ void ASprinklerTarget::HandleHit()
 			);
 		}
 		
-		// Turn on water sprinkler effect
+		// turn on water sprinkler effect
 		if (Sprinkler)
 		{
 			Sprinkler->StartSprinkler();
 		}
 		
-		// TODO: remove fire barrier
+		// remove fire barrier
+		if (Fire)
+		{
+			Fire->Disappear();
+		}
 	}
 	else
 	{

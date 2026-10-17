@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FireBarrier.h"
 #include "Sprinkler.h"
 #include "GameFramework/Actor.h"
 #include "SprinklerTarget.generated.h"
@@ -34,6 +35,9 @@ protected:
 	
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Config")
 	TObjectPtr<ASprinkler> Sprinkler;
+	
+	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Config")
+	TObjectPtr<AFireBarrier> Fire;
 	
 	bool WasHit = false;
 
