@@ -37,7 +37,7 @@ protected:
 	TObjectPtr<ASprinkler> Sprinkler;
 	
 	UPROPERTY(EditInstanceOnly, BlueprintReadWrite, Category = "Config")
-	TObjectPtr<AFireBarrier> Fire;
+	TArray<AFireBarrier*> FireBarriers;
 	
 	bool WasHit = false;
 

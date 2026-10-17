@@ -77,8 +77,8 @@ void ASprinklerTarget::HandleHit()
 			Sprinkler->StartSprinkler();
 		}
 		
-		// remove fire barrier
-		if (Fire)
+		// remove fire barriers
+		for (const AFireBarrier* Fire : FireBarriers)
 		{
 			Fire->Disappear();
 		}
