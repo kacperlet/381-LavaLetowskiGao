@@ -114,6 +114,8 @@ public:
 	void GiveAllKeysCheat();
 	
 	void SpeedUpLavaCheat();
+	
+	void GoToSecondLevel();
 
 public:
 
