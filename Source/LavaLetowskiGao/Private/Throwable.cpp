@@ -48,6 +48,8 @@ void AThrowable::Throw(const FVector& Direction)
 	
 	// don't move pawns (charcter) when thrown
 	Mesh->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
+	
+	GetWorldTimerManager().SetTimer(RestorePawnCollisionTimer, this, &AThrowable::RestorePawnCollision, 0.1f, false);
 
     if (AActor* Thrower = GetOwner())
     {
@@ -63,6 +65,11 @@ void AThrowable::Throw(const FVector& Direction)
 
 	// UE_LOG(LogTemp, Warning, TEXT("THROW2 updated=%s vel=%s"),
  //    *GetNameSafe(Movement->UpdatedComponent), *Movement->Velocity.ToString());
+}
+
+void AThrowable::RestorePawnCollision()
+{
+	Mesh->SetCollisionResponseToChannel(ECC_Pawn, ECR_Block);
 }
 
 void AThrowable::SetCarried(bool bCarried)

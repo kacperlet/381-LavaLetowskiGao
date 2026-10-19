@@ -58,4 +58,7 @@ protected:
 	FVector BaseScale = FVector::OneVector;
 	
 	virtual void ApplyThrowOrientation(const FVector& Direction) { };
+	
+	FTimerHandle RestorePawnCollisionTimer;
+	void RestorePawnCollision();
 };
