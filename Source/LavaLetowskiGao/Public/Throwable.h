@@ -4,7 +4,6 @@
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
-#include "LavaLetowskiGaoCharacter.h"
 #include "Throwable.generated.h"
 
 class UStaticMeshComponent;
@@ -52,4 +51,7 @@ protected:
 
 	UPROPERTY()
     EThrowableState State = EThrowableState::Idle;
+	
+	UPROPERTY(EditAnywhere, Category = "Throwable")
+	float InHandScale = 0.1f;
 };

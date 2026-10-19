@@ -76,8 +76,8 @@ void ALavaLetowskiGaoCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 		PlayerInputComponent->BindKey(EKeys::L, IE_Pressed, this, &ALavaLetowskiGaoCharacter::SpeedUpLavaCheat);
 		
 		//debugging throwable
-		PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALavaLetowskiGaoCharacter::DebugPickUp);
-		PlayerInputComponent->BindKey(EKeys::F, IE_Pressed, this, &ALavaLetowskiGaoCharacter::DebugThrow);
+		// PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALavaLetowskiGaoCharacter::DebugPickUp);
+		// PlayerInputComponent->BindKey(EKeys::F, IE_Pressed, this, &ALavaLetowskiGaoCharacter::DebugThrow);
 	}
 	else
 	{
@@ -241,25 +241,25 @@ void ALavaLetowskiGaoCharacter::SpeedUpLavaCheat()
 }
 
 // debug throwable ********************************************************************************************
-void ALavaLetowskiGaoCharacter::DebugPickUp()
-{
-	if (HeldThrowable || !DebugThrowableClass) return;
-
-	FActorSpawnParameters Params;
-	Params.Owner = this;
-	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-	HeldThrowable = GetWorld()->SpawnActor<AThrowable>(DebugThrowableClass, GetActorTransform(), Params);
-	if (HeldThrowable)
-	{
-		HeldThrowable->SetCarried(true);
-	}
-}
-
-void ALavaLetowskiGaoCharacter::DebugThrow()
-{
-	if (!HeldThrowable) return;
-
-	HeldThrowable->Throw(GetControlRotation().Vector());
-	HeldThrowable = nullptr;
-}
+// void ALavaLetowskiGaoCharacter::DebugPickUp()
+// {
+// 	if (HeldThrowable || !DebugThrowableClass) return;
+//
+// 	FActorSpawnParameters Params;
+// 	Params.Owner = this;
+// 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+//
+// 	HeldThrowable = GetWorld()->SpawnActor<AThrowable>(DebugThrowableClass, GetActorTransform(), Params);
+// 	if (HeldThrowable)
+// 	{
+// 		HeldThrowable->SetCarried(true);
+// 	}
+// }
+//
+// void ALavaLetowskiGaoCharacter::DebugThrow()
+// {
+// 	if (!HeldThrowable) return;
+//
+// 	HeldThrowable->Throw(GetControlRotation().Vector());
+// 	HeldThrowable = nullptr;
+// }

@@ -3,6 +3,9 @@
 
 #include "InventoryComponent.h"
 
+#include "Cushion.h"
+#include "LavaLetowskiGaoCharacter.h"
+
 // Sets default values for this component's properties
 UInventoryComponent::UInventoryComponent()
 {
@@ -12,7 +15,6 @@ UInventoryComponent::UInventoryComponent()
 	Slots.Add(EItemSlot::Cushion, {nullptr, 3, 1});
 	Slots.Add(EItemSlot::Extinguisher, {nullptr, 3, 3});
 }
-
 
 bool UInventoryComponent::AddItem(EItemSlot Slot)
 {
@@ -27,7 +29,50 @@ bool UInventoryComponent::AddItem(EItemSlot Slot)
 
 void UInventoryComponent::EquipSlot(EItemSlot Slot)
 {
+	// clear whatever is currently in hand
+	RefreshHeldActor();
+	
 	EquippedSlot = Slot;
+	
+	if (GetCount(EquippedSlot) > 0)
+	{
+		if (EquippedSlot == EItemSlot::Cushion)
+		{
+			// get item class
+			FInventorySlot* SlotData = Slots.Find(EItemSlot::Cushion);
+			if (!SlotData || !SlotData->ItemClass) return;
+
+			// get owner
+			ACharacter* Character = Cast<ACharacter>(GetOwner());
+			if (!Character) return;
+
+			// hand information to our cushion
+			FActorSpawnParameters Params;
+			Params.Owner = Character;
+			Params.Instigator = Character;
+			Params.SpawnCollisionHandlingOverride =
+				ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+			// spawn item
+			AThrowable* Spawned = GetWorld()->SpawnActor<AThrowable>(
+				SlotData->ItemClass,
+				Character->GetActorLocation(),
+				Character->GetActorRotation(),
+				Params);
+
+			// carry cushion
+			if (ACushion* Cushion = Cast<ACushion>(Spawned))
+			{
+				Cushion->SetCarried(true);
+			}
+			
+			// carry fire extinguisher
+			// if (AExtinguisher* Extinguisher = Cast<AExtinguisher>(Spawned))
+			// {
+			// 	Extinguisher->SetCarried(true);
+			// }
+		}
+	}
 }
 
 void UInventoryComponent::ThrowEquipped()
@@ -57,5 +102,9 @@ EItemSlot UInventoryComponent::GetEquipped() const
 
 void UInventoryComponent::RefreshHeldActor()
 {
-	// TODO: implement
+	if (HeldActor != nullptr)
+	{
+		HeldActor->Destroy();
+		HeldActor = nullptr;
+	}
 }

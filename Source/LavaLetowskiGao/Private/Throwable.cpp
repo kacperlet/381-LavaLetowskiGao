@@ -1,9 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Throwable.h"
-
 #include "SprinklerTarget.h"
+#include "LavaLetowskiGaoCharacter.h"
 
 // Sets default values
 AThrowable::AThrowable()
@@ -61,17 +60,21 @@ void AThrowable::SetCarried(bool bCarried)
 {
 	if (bCarried)
     {
-		UE_LOG(LogTemp, Warning, TEXT("SetCarried Mesh=%s Movement=%s"),
-    		*GetNameSafe(Mesh), *GetNameSafe(Movement));
         ALavaLetowskiGaoCharacter* Carrier = Cast<ALavaLetowskiGaoCharacter>(GetOwner());
         if (!Carrier) return;
 
+		// deactivate physics and collisions
         State = EThrowableState::Carried;
 		Mesh->SetSimulatePhysics(false);
 		Mesh->SetEnableGravity(false);
-        Movement->Deactivate();
         Movement->StopMovementImmediately();
+		Movement->Deactivate();
         Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+		
+		// make the mesh small so it looks correct in-hand
+		const FVector OriginalScale = Mesh->GetComponentScale();
+		Mesh->SetWorldScale3D(OriginalScale * InHandScale);
+		
         AttachToComponent(Carrier->GetMesh(),
             FAttachmentTransformRules::SnapToTargetNotIncludingScale,
             TEXT("hand_r"));
