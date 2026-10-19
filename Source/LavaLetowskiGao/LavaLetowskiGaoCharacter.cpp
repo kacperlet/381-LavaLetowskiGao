@@ -13,6 +13,7 @@
 #include "LavaGameMode.h"
 #include "Throwable.h"
 #include "LavaLetowskiGao.h"
+#include "Kismet/GameplayStatics.h"
 
 ALavaLetowskiGaoCharacter::ALavaLetowskiGaoCharacter()
 {
@@ -74,10 +75,7 @@ void ALavaLetowskiGaoCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 		// Cheat Functions
 		PlayerInputComponent->BindKey(EKeys::K, IE_Pressed, this, &ALavaLetowskiGaoCharacter::GiveAllKeysCheat);
 		PlayerInputComponent->BindKey(EKeys::L, IE_Pressed, this, &ALavaLetowskiGaoCharacter::SpeedUpLavaCheat);
-		
-		//debugging throwable
-		// PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALavaLetowskiGaoCharacter::DebugPickUp);
-		// PlayerInputComponent->BindKey(EKeys::F, IE_Pressed, this, &ALavaLetowskiGaoCharacter::DebugThrow);
+		PlayerInputComponent->BindKey(EKeys::T, IE_Pressed, this, &ALavaLetowskiGaoCharacter::GoToSecondLevel);
 	}
 	else
 	{
@@ -240,26 +238,13 @@ void ALavaLetowskiGaoCharacter::SpeedUpLavaCheat()
 	}
 }
 
-// debug throwable ********************************************************************************************
-// void ALavaLetowskiGaoCharacter::DebugPickUp()
-// {
-// 	if (HeldThrowable || !DebugThrowableClass) return;
-//
-// 	FActorSpawnParameters Params;
-// 	Params.Owner = this;
-// 	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-//
-// 	HeldThrowable = GetWorld()->SpawnActor<AThrowable>(DebugThrowableClass, GetActorTransform(), Params);
-// 	if (HeldThrowable)
-// 	{
-// 		HeldThrowable->SetCarried(true);
-// 	}
-// }
-//
-// void ALavaLetowskiGaoCharacter::DebugThrow()
-// {
-// 	if (!HeldThrowable) return;
-//
-// 	HeldThrowable->Throw(GetControlRotation().Vector());
-// 	HeldThrowable = nullptr;
-// }
+
+void ALavaLetowskiGaoCharacter::GoToSecondLevel()
+{
+	FName CurrentLevelName = FName(UGameplayStatics::GetCurrentLevelName(GetWorld()));
+	FName NextLevelName = TEXT("/Game/Levels/Lvl_GrandCentral");
+	if (CurrentLevelName != TEXT("Lvl_GrandCentral"))
+	{
+		UGameplayStatics::OpenLevel(GetWorld(), NextLevelName);
+	}
+}
