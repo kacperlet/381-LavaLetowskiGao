@@ -85,6 +85,16 @@ void UInventoryComponent::EquipSlot(EItemSlot Slot)
 		if (!HeldActor) return;
 		HeldActor->SetCarried(true);
 	}
+	else{
+		// get owner
+		APlayerController* PC = Cast<APlayerController>(GetOwner());
+		if (!PC) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Owner is not a PlayerController")); return; }
+		ALavaLetowskiGaoCharacter* Character = PC ? Cast<ALavaLetowskiGaoCharacter>(PC->GetPawn()) : nullptr;
+		if (!Character) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Pawn is not LavaLetowskiGaoCharacter")); return; }
+		
+		// remove crosshair
+		Character->SetCrosshairVisible(false);
+	}
 }
 
 void UInventoryComponent::ThrowEquipped()
@@ -109,13 +119,16 @@ void UInventoryComponent::ThrowEquipped()
 		HeldActor = nullptr;
 		
 		// make sure to handle when there are still items of the same type available to throw
-		if (Equipped->Count > 0)
-		{
-			EquipSlot(EquippedSlot);
-		}
+		EquipSlot(EquippedSlot);
 	}
 	else
 	{
+		// get owner
+		APlayerController* PC = Cast<APlayerController>(GetOwner());
+		if (!PC) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Owner is not a PlayerController")); return; }
+		ALavaLetowskiGaoCharacter* Character = PC ? Cast<ALavaLetowskiGaoCharacter>(PC->GetPawn()) : nullptr;
+		if (!Character) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Pawn is not LavaLetowskiGaoCharacter")); return; }
+		Character->SetCrosshairVisible(false);
 		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("No items left to throw!"));
 	}
 }
