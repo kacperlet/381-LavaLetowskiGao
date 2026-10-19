@@ -238,7 +238,6 @@ void ALavaLetowskiGaoCharacter::SpeedUpLavaCheat()
 	}
 }
 
-
 void ALavaLetowskiGaoCharacter::GoToSecondLevel()
 {
 	FName CurrentLevelName = FName(UGameplayStatics::GetCurrentLevelName(GetWorld()));
