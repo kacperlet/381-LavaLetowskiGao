@@ -33,6 +33,8 @@ void AThrowable::BeginPlay()
 	Super::BeginPlay();
 	
 	Mesh->OnComponentHit.AddDynamic(this, &AThrowable::HandleHit);
+	
+	BaseScale = Mesh->GetComponentScale();
 }
 
 void AThrowable::Throw(const FVector& Direction)
@@ -61,7 +63,11 @@ void AThrowable::SetCarried(bool bCarried)
 	if (bCarried)
     {
         ALavaLetowskiGaoCharacter* Carrier = Cast<ALavaLetowskiGaoCharacter>(GetOwner());
-        if (!Carrier) return;
+		if (!Carrier)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("SetCarried: owner is not the character"));
+			return;
+		}
 
 		// deactivate physics and collisions
         State = EThrowableState::Carried;
@@ -86,6 +92,9 @@ void AThrowable::SetCarried(bool bCarried)
         Mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
         State = EThrowableState::Idle;
 		Mesh->SetEnableGravity(true);
+    	
+    	// return scale
+    	Mesh->SetWorldScale3D(BaseScale);
     }
 }
 

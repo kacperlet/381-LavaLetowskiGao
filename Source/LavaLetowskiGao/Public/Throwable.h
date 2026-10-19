@@ -53,5 +53,7 @@ protected:
     EThrowableState State = EThrowableState::Idle;
 	
 	UPROPERTY(EditAnywhere, Category = "Throwable")
-	float InHandScale = 0.1f;
+	float InHandScale = 1.0f;
+	
+	FVector BaseScale = FVector::OneVector;
 };

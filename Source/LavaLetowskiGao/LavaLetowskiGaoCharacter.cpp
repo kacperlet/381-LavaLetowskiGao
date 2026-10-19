@@ -76,6 +76,14 @@ void ALavaLetowskiGaoCharacter::BeginPlay()
 	}
 }
 
+void ALavaLetowskiGaoCharacter::SetCrosshairVisible(bool bVisible)
+{
+	if (CrosshairWidget)
+	{
+		CrosshairWidget->SetVisibility(bVisible ? ESlateVisibility::HitTestInvisible : ESlateVisibility::Collapsed);
+	}
+}
+
 void ALavaLetowskiGaoCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	// Set up action bindings

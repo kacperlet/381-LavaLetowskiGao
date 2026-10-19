@@ -84,6 +84,8 @@ public:
 	UPROPERTY()
 	UUserWidget* CrosshairWidget = nullptr;
 	
+	void SetCrosshairVisible(bool bVisible);
+	
 protected:
 
 	/** Initialize input action bindings */
