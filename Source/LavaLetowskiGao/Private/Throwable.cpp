@@ -40,6 +40,7 @@ void AThrowable::BeginPlay()
 void AThrowable::Throw(const FVector& Direction)
 {
 	SetCarried(false);
+	
     State = EThrowableState::Thrown;
 
     if (AActor* Thrower = GetOwner())
@@ -54,8 +55,8 @@ void AThrowable::Throw(const FVector& Direction)
     Movement->Activate(true);
     Movement->Velocity = Direction.GetSafeNormal() * ThrowSpeed;
 
-	UE_LOG(LogTemp, Warning, TEXT("THROW2 updated=%s vel=%s"),
-    *GetNameSafe(Movement->UpdatedComponent), *Movement->Velocity.ToString());
+	// UE_LOG(LogTemp, Warning, TEXT("THROW2 updated=%s vel=%s"),
+ //    *GetNameSafe(Movement->UpdatedComponent), *Movement->Velocity.ToString());
 }
 
 void AThrowable::SetCarried(bool bCarried)

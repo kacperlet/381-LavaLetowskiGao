@@ -19,7 +19,6 @@ UInventoryComponent::UInventoryComponent()
 
 bool UInventoryComponent::AddItem(EItemSlot Slot)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Adding Item!"));
 	FInventorySlot* selectedSlot = Slots.Find(Slot);
 	if (selectedSlot && selectedSlot->Count < selectedSlot->Capacity)
 	{
@@ -31,7 +30,6 @@ bool UInventoryComponent::AddItem(EItemSlot Slot)
 
 void UInventoryComponent::EquipSlot(EItemSlot Slot)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Equip Slot"));
 	// clear whatever is currently in hand
 	RefreshHeldActor();
 	
@@ -45,23 +43,26 @@ void UInventoryComponent::EquipSlot(EItemSlot Slot)
 		if (EquippedSlot == EItemSlot::Cushion)
 		{
 			SlotData = Slots.Find(EItemSlot::Cushion);
-			if (!SlotData || !SlotData->ItemClass) return;
+			if (!SlotData || !SlotData->ItemClass) { return; }
 		}
 		else if (EquippedSlot == EItemSlot::Extinguisher)
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Is Extinguisher"));
 			SlotData = Slots.Find(EItemSlot::Extinguisher);
-			if (!SlotData || !SlotData->ItemClass) return;
+			if (!SlotData || !SlotData->ItemClass) { return; }
 		}
 		else
 		{
 			// error
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Other"));
 			return;
 		}
 		
 		// get owner
 		APlayerController* PC = Cast<APlayerController>(GetOwner());
+		if (!PC) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Owner is not a PlayerController")); return; }
 		ALavaLetowskiGaoCharacter* Character = PC ? Cast<ALavaLetowskiGaoCharacter>(PC->GetPawn()) : nullptr;
-		if (!Character) return;
+		if (!Character) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Pawn is not LavaLetowskiGaoCharacter")); return; }
 		
 		// put crosshair
 		Character->SetCrosshairVisible(true);
@@ -80,39 +81,38 @@ void UInventoryComponent::EquipSlot(EItemSlot Slot)
 			Character->GetActorRotation(),
 			Params);
 		
-		// carry cushion
-		if (ACushion* Cushion = Cast<ACushion>(HeldActor))
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Equipped Cushion"));
-			Cushion->SetCarried(true);
-		}
-		
-		//carry fire extinguisher
-		if (AExtinguisher* Extinguisher = Cast<AExtinguisher>(HeldActor))
-		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Equipped Extinguisher"));
-			Extinguisher->SetCarried(true);
-		}
+		// carry item
+		if (!HeldActor) return;
+		HeldActor->SetCarried(true);
 	}
 }
 
 void UInventoryComponent::ThrowEquipped()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Throw Equipped!"));
+	if (!HeldActor)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("HeldActor is NULL"));
+		return;
+	}
 	FInventorySlot* Equipped = Slots.Find(EquippedSlot);
 	if (Equipped->Count > 0)
-	{		
+	{
 		Equipped->Count--;
-		
+
 		// get owner
-		ALavaLetowskiGaoCharacter* Character = Cast<ALavaLetowskiGaoCharacter>(GetOwner());
-		if (!Character) return;
+		APlayerController* PC = Cast<APlayerController>(GetOwner());
+		if (!PC) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Owner is not a PlayerController")); return; }
+		ALavaLetowskiGaoCharacter* Character = PC ? Cast<ALavaLetowskiGaoCharacter>(PC->GetPawn()) : nullptr;
+		if (!Character) { GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Pawn is not LavaLetowskiGaoCharacter")); return; }
 		
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Throw Item!"));
 		HeldActor->Throw(Character->GetControlRotation().Vector());
+		HeldActor = nullptr;
 		
 		// make sure to handle when there are still items of the same type available to throw
-		EquipSlot(EquippedSlot);
+		if (Equipped->Count > 0)
+		{
+			EquipSlot(EquippedSlot);
+		}
 	}
 	else
 	{

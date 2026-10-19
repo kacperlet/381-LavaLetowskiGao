@@ -66,4 +66,7 @@ protected:
 	
 	/** Use the currently select item, if possible*/
 	void UseItem();
+	
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<AThrowable> TestClass;
 };
