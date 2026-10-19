@@ -29,6 +29,9 @@ class LAVALETOWSKIGAO_API UResultWidget : public UUserWidget
 	class UTextBlock* DeathMessageText;
 	
 	UPROPERTY(meta = (BindWidget))
+	class UTextBlock* ButtonText;
+	
+	UPROPERTY(meta = (BindWidget))
 	class UButton* ResultButton;
 	
 protected:

@@ -45,6 +45,9 @@ void AThrowable::Throw(const FVector& Direction)
 	
 	// set orientation
 	ApplyThrowOrientation(Direction);
+	
+	// don't move pawns (charcter) when thrown
+	Mesh->SetCollisionResponseToChannel(ECC_Pawn, ECR_Ignore);
 
     if (AActor* Thrower = GetOwner())
     {

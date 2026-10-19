@@ -30,6 +30,13 @@ void UResultWidget::InitializeResultScreen(ALavaHUD* LavaHUD, FText DeathMessage
 		FString WinMessage = FString::Printf(TEXT("YOU WIN! Please play again!\nFinal Score: %d"), FinalScore);
 		ResultText->SetText(FText::FromString(WinMessage));
 		DeathMessageText->SetText(FText::FromString(TEXT("")));
+		
+		// Change Button to go to next level if on first level
+		FName LevelName = FName(UGameplayStatics::GetCurrentLevelName(GetWorld()));
+		if (LevelName == "THE_MET")
+		{
+			ButtonText->SetText(FText::FromString(TEXT("Go to level 2!")));
+		}
 	}
 	else
 	{
