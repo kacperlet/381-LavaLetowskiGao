@@ -23,14 +23,6 @@ void ACushion::HandleHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrim
 		TEXT("Cushion hit surface!") 
 	);
 	
-	// if hit sprinkler, activate sprinkler and disappear
-	if (ASprinklerTarget* Target = Cast<ASprinklerTarget>(OtherActor))
-	{
-		Target->HandleHit();
-		Destroy();
-		return;
-	}
-	
 	// if hit lava, start 5 second timer until burning away (if we have time, add burning effect), become larger as a platform, disappear at the end of the timer
 	if (ALava *Lava = Cast<ALava>(OtherActor))
 	{

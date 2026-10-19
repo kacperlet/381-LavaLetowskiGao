@@ -68,12 +68,22 @@ protected:
 	int32 JumpMaxCountVal = 2;
 	
 	FVector LastSafeLocation;
+	
+	virtual void BeginPlay() override;
+
 public:
 
 	/** Constructor */
 	ALavaLetowskiGaoCharacter();	
 	
 	virtual void Tick(float DeltaTime) override;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UUserWidget> CrosshairWidgetClass;
+
+	UPROPERTY()
+	UUserWidget* CrosshairWidget = nullptr;
+	
 protected:
 
 	/** Initialize input action bindings */

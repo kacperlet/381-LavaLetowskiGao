@@ -13,6 +13,7 @@
 #include "LavaGameMode.h"
 #include "Throwable.h"
 #include "LavaLetowskiGao.h"
+#include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 
 ALavaLetowskiGaoCharacter::ALavaLetowskiGaoCharacter()
@@ -55,6 +56,25 @@ ALavaLetowskiGaoCharacter::ALavaLetowskiGaoCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named ThirdPersonCharacter (to avoid direct content references in C++)
 }
+// LavaLetowskiGaoCharacter.cpp
+void ALavaLetowskiGaoCharacter::BeginPlay()
+{
+	Super::BeginPlay();   // always call this first
+
+	// crosshair widget creation goes here
+	if (CrosshairWidgetClass)
+	{
+		if (APlayerController* PC = Cast<APlayerController>(GetController()))
+		{
+			CrosshairWidget = CreateWidget<UUserWidget>(PC, CrosshairWidgetClass);
+			if (CrosshairWidget)
+			{
+				CrosshairWidget->AddToViewport();
+				CrosshairWidget->SetVisibility(ESlateVisibility::Collapsed);
+			}
+		}
+	}
+}
 
 void ALavaLetowskiGaoCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
@@ -76,6 +96,10 @@ void ALavaLetowskiGaoCharacter::SetupPlayerInputComponent(UInputComponent* Playe
 		PlayerInputComponent->BindKey(EKeys::K, IE_Pressed, this, &ALavaLetowskiGaoCharacter::GiveAllKeysCheat);
 		PlayerInputComponent->BindKey(EKeys::L, IE_Pressed, this, &ALavaLetowskiGaoCharacter::SpeedUpLavaCheat);
 		PlayerInputComponent->BindKey(EKeys::T, IE_Pressed, this, &ALavaLetowskiGaoCharacter::GoToSecondLevel);
+		
+		//debugging throwable
+		PlayerInputComponent->BindKey(EKeys::E, IE_Pressed, this, &ALavaLetowskiGaoCharacter::DebugPickUp);
+		PlayerInputComponent->BindKey(EKeys::F, IE_Pressed, this, &ALavaLetowskiGaoCharacter::DebugThrow);
 	}
 	else
 	{
@@ -236,6 +260,30 @@ void ALavaLetowskiGaoCharacter::SpeedUpLavaCheat()
 		
 		Gm->SetLavaSpeed(240);
 	}
+}
+
+// debug throwable ********************************************************************************************
+void ALavaLetowskiGaoCharacter::DebugPickUp()
+{
+	if (HeldThrowable || !DebugThrowableClass) return;
+
+	FActorSpawnParameters Params;
+	Params.Owner = this;
+	Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+	HeldThrowable = GetWorld()->SpawnActor<AThrowable>(DebugThrowableClass, GetActorTransform(), Params);
+	if (HeldThrowable)
+	{
+		HeldThrowable->SetCarried(true);
+	}
+}
+
+void ALavaLetowskiGaoCharacter::DebugThrow()
+{
+	if (!HeldThrowable) return;
+
+	HeldThrowable->Throw(GetControlRotation().Vector());
+	HeldThrowable = nullptr;
 }
 
 void ALavaLetowskiGaoCharacter::GoToSecondLevel()

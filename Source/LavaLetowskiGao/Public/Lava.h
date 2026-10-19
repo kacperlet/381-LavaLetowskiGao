@@ -25,6 +25,9 @@ public:
 	virtual void OnConstruction(const FTransform& Transform) override;
 	
 	void SetLavaSpeed(float Speed);
+	
+	void LowerLavaLevel();
+	
 protected:
 	virtual void BeginPlay() override;
 	// The signature must match FComponentBeginOverlapSignature exactly,

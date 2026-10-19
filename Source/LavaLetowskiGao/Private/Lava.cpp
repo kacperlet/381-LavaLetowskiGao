@@ -91,7 +91,7 @@ void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 			DamageImmunity = true;
 			
 			// Move Lava Down
-			AddActorWorldOffset(FVector(0, 0, -500));
+			LowerLavaLevel();
 			
 			// Teleport player to last safe location
 			Cast<ALavaLetowskiGaoCharacter>(Pawn)->TeleportToLastSafeLocation();
@@ -106,6 +106,12 @@ void ALava::HandleOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActo
 			GetWorldTimerManager().SetTimer(ImmunityTimer, [this]() { UnFreeze();}, 0.5f, false);
 		}
 	}
+}
+
+void ALava::LowerLavaLevel()
+{
+	// Move Lava Down
+	AddActorWorldOffset(FVector(0, 0, -500));
 }
 
 float ALava::GetRiseHeight() const
