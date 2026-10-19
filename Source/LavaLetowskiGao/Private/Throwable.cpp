@@ -42,6 +42,9 @@ void AThrowable::Throw(const FVector& Direction)
 	SetCarried(false);
 	
     State = EThrowableState::Thrown;
+	
+	// set orientation
+	ApplyThrowOrientation(Direction);
 
     if (AActor* Thrower = GetOwner())
     {

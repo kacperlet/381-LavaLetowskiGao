@@ -56,4 +56,6 @@ protected:
 	float InHandScale = 1.0f;
 	
 	FVector BaseScale = FVector::OneVector;
+	
+	virtual void ApplyThrowOrientation(const FVector& Direction) { };
 };

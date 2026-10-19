@@ -26,4 +26,6 @@ protected:
 
 	UPROPERTY(EditAnywhere, Category = "Cushion")
 	float PlatformScale = 3.0f;
+	
+	virtual void ApplyThrowOrientation(const FVector& Direction);
 };

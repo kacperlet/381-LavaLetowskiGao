@@ -26,6 +26,12 @@ void ACushion::HandleHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrim
 	// if hit lava, start 5 second timer until burning away (if we have time, add burning effect), become larger as a platform, disappear at the end of the timer
 	if (ALava *Lava = Cast<ALava>(OtherActor))
 	{
+		GEngine->AddOnScreenDebugMessage(
+			-1, 
+			2.0f,
+			FColor::Blue, 
+			TEXT("Cushion Hit Lava") 
+		);
 		// freeze at position on lava
 		Mesh->SetSimulatePhysics(false);
 		Movement->StopMovementImmediately();
@@ -58,4 +64,19 @@ void ACushion::BurnedAway()
 {
 	// can add a burned away animation here
 	Destroy();
+}
+
+void ACushion::ApplyThrowOrientation(const FVector& Direction)
+{
+	GEngine->AddOnScreenDebugMessage(
+		-1, 
+		2.0f,
+		FColor::Blue, 
+		TEXT("Setting Cushion Orientation") 
+	);
+	// set orientation
+	FRotator Facing = Direction.Rotation();
+	Facing.Pitch = 0.f;
+	Facing.Roll = 0.f;
+	SetActorRotation(Facing);
 }
