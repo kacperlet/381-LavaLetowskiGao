@@ -57,6 +57,8 @@ void ULavaHUDWidget::SetSelectedInventorySlot(EItemSlot SlotUsed) const
 			ItemsExtinguisher->SetIsSelected(true);
 			break;
 		default:
+			ItemsCushion->SetIsSelected(false);
+			ItemsExtinguisher->SetIsSelected(false);
 			return;
 	}
 }

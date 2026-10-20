@@ -10,6 +10,7 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "LavaGameInstance.h"
 #include "LavaGameMode.h"
 #include "Throwable.h"
 #include "LavaLetowskiGao.h"
@@ -296,6 +297,12 @@ void ALavaLetowskiGaoCharacter::DebugThrow()
 
 void ALavaLetowskiGaoCharacter::GoToSecondLevel()
 {
+	// Add "plausible score" to game instance
+	if (ULavaGameInstance* GI = Cast<ULavaGameInstance>(GetGameInstance()))
+	{
+		GI->Score = 600;
+	}
+	
 	FName CurrentLevelName = FName(UGameplayStatics::GetCurrentLevelName(GetWorld()));
 	FName NextLevelName = TEXT("/Game/Levels/Lvl_GrandCentral");
 	if (CurrentLevelName != TEXT("Lvl_GrandCentral"))
