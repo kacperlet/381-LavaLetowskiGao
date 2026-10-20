@@ -36,6 +36,11 @@ void UInventoryComponent::EquipSlot(EItemSlot Slot)
 	// switch slot
 	EquippedSlot = Slot;
 	
+	if (EquippedSlot == EItemSlot::None)
+	{ 
+		return;
+	}
+	
 	if (GetCount(EquippedSlot) > 0)
 	{
 		// get item class

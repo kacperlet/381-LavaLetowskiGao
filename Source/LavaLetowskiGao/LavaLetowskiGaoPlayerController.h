@@ -66,6 +66,9 @@ protected:
 	
 	void SelectExtinguisherItem();
 	
+	void UnSelectItems();
+	
+	
 	/** Use the currently select item, if possible*/
 	void UseItem();
 	

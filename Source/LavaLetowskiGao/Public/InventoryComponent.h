@@ -10,7 +10,8 @@ UENUM(BlueprintType)
 enum class EItemSlot : uint8
 {
 	Cushion      UMETA(DisplayName = "Cushion"),
-	Extinguisher UMETA(DisplayName = "Extinguisher")
+	Extinguisher UMETA(DisplayName = "Extinguisher"),
+	None		 UMETA(DisplayName = "None")
 };
 
 USTRUCT(BlueprintType)
@@ -61,7 +62,7 @@ protected:
 	TMap<EItemSlot, FInventorySlot> Slots;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Inventory")
-	EItemSlot EquippedSlot = EItemSlot::Cushion;
+	EItemSlot EquippedSlot = EItemSlot::None;
 
 	// Transient: runtime only, never saved, but the GC still needs to see it.
 	UPROPERTY(Transient)
