@@ -18,14 +18,14 @@ void UResultWidget::InitializeResultScreen(ALavaHUD* LavaHUD, FText DeathMessage
 	int32 FinalScore = Gm->GetScore();
 	Won = bWin;
 	
-	// Transfer score to game instance
-	if (ULavaGameInstance* GI = Cast<ULavaGameInstance>(GetGameInstance()))
-	{
-		GI->Score = FinalScore;
-	}
-	
 	if (bWin)
 	{
+		// Transfer score to game instance
+		if (ULavaGameInstance* GI = Cast<ULavaGameInstance>(GetGameInstance()))
+		{
+			GI->Score = FinalScore;
+		}
+		
 		// Use FString for Dynamic Text (to include score)
 		FString WinMessage = FString::Printf(TEXT("YOU WIN! Please play again!\nFinal Score: %d"), FinalScore);
 		ResultText->SetText(FText::FromString(WinMessage));

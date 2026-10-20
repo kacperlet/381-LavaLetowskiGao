@@ -25,6 +25,8 @@ public:
 	int32 GetItemCount(EItemSlot Slot) const;
 	
 	EItemSlot GetSelectedItem() const;
+	
+	void FillInventoryCheat();
 protected:
 
 	/** Input Mapping Contexts */

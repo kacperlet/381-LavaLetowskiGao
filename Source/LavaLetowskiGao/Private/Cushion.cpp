@@ -5,7 +5,6 @@
 #include "InventoryComponent.h"
 #include "Lava.h"
 
-#include <ntstatus.h>
 
 // override HandleHit from parent function
 void ACushion::HandleHit(UPrimitiveComponent* HitComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
