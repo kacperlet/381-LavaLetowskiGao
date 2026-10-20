@@ -22,7 +22,7 @@ void ARoofHatch::BeginPlay()
 	}
 	
 	StartLocation = GetActorLocation();
-	EndLocation = StartLocation + FVector(1100.f, 0.f, 0.f); // move up 400 cm
+	EndLocation = StartLocation + FVector(-1500.f, 0.f, 0.f);
 }
 
 // Called every frame
