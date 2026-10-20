@@ -71,6 +71,7 @@ void ALavaLetowskiGaoPlayerController::SetupInputComponent()
 			InputComponent->BindKey(EKeys::One, IE_Pressed, this, &ALavaLetowskiGaoPlayerController::SelectCushionItem);
 			InputComponent->BindKey(EKeys::Two, IE_Pressed, this, &ALavaLetowskiGaoPlayerController::SelectExtinguisherItem);
 			InputComponent->BindKey(EKeys::LeftMouseButton, IE_Pressed, this, &ALavaLetowskiGaoPlayerController::UseItem);
+			InputComponent->BindKey(EKeys::Y, IE_Pressed, this, &ALavaLetowskiGaoPlayerController::FillInventoryCheat);
 		}
 		
 	}
@@ -105,4 +106,15 @@ void ALavaLetowskiGaoPlayerController::SelectExtinguisherItem()
 void ALavaLetowskiGaoPlayerController::UseItem() 
 {
 	InventoryComponent->ThrowEquipped();
+}
+
+void ALavaLetowskiGaoPlayerController::FillInventoryCheat()
+{
+	InventoryComponent->AddItem(EItemSlot::Cushion);
+	InventoryComponent->AddItem(EItemSlot::Cushion);
+	InventoryComponent->AddItem(EItemSlot::Cushion);
+	
+	InventoryComponent->AddItem(EItemSlot::Extinguisher);
+	InventoryComponent->AddItem(EItemSlot::Extinguisher);
+	InventoryComponent->AddItem(EItemSlot::Extinguisher);
 }
